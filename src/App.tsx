@@ -1,16 +1,21 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import ThemeProvider from './contexts/ThemeContext'; 
-import { useTheme } from './contexts/ThemeContextValue'; 
+
+import ThemeProvider from './contexts/ThemeContext';
+import { useTheme } from './contexts/ThemeContextValue';
+
 import Navbar from './components/Common/Navbar/Navbar';
+import FloatingSocialMenu from './components/Common/FloatingSocialMenu/FloatingSocialMenu';
+import ScrollToTopButton from './components/Common/ScrollToTopButton/ScrollToTopButton';
+
 import HomeSection from './pages/Home';
 import AboutSection from './pages/About';
 import ProjectsSection from './pages/Projects';
 import SkillsSection from './pages/Skills';
 import ContactSection from './pages/Contact';
-import FloatingSocialMenu from './components/Common/FloatingSocialMenu/FloatingSocialMenu'
-import ScrollToTopButton from './components/Common/ScrollToTopButton/ScrollToTopButton'
+import LoginPage from './pages/Login';
 
 const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme } = useTheme();
@@ -79,29 +84,41 @@ const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   );
 };
 
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const location = useLocation();
+  const isLoginRoute = location.pathname === '/login';
+
+  return (
+    <>
+      {!isLoginRoute && <Navbar />}
+      {!isLoginRoute && <FloatingSocialMenu />}
+      {!isLoginRoute && <ScrollToTopButton />}
+      {children}
+    </>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <FloatingSocialMenu />
-      <ScrollToTopButton />
-      <ThemeWrapper>
-        <Navbar />
-        <div id="home">
-          <HomeSection />
-        </div>
-        <div id="about">
-          <AboutSection />
-        </div>
-        <div id="projects">
-          <ProjectsSection />
-        </div>
-        <div id="skills">
-          <SkillsSection />
-        </div>
-        <div id="contact">
-          <ContactSection />
-        </div>
-      </ThemeWrapper>
+      <Router>
+        <ThemeWrapper>
+          <Layout>
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <div id="home"><HomeSection /></div>
+                  <div id="about"><AboutSection /></div>
+                  <div id="projects"><ProjectsSection /></div>
+                  <div id="skills"><SkillsSection /></div>
+                  <div id="contact"><ContactSection /></div>
+                </>
+              } />
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </Layout>
+        </ThemeWrapper>
+      </Router>
     </ThemeProvider>
   );
 };
