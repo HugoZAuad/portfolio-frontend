@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Grid } from '@mui/material';
-import SectionContainer from '../components/Components_About/SectionContainer/SectionContainer';
-import AboutText from '../components/Components_About/AboutText/AboutText';
-import AboutAvatar from '../components/Components_About/AboutAvatar/AboutAvatar';
+import SectionContainer from '../../components/Components_About/SectionContainer/SectionContainer';
+import AboutText from '../../components/Components_About/AboutText/AboutText';
+import AboutAvatar from '../../components/Components_About/AboutAvatar/AboutAvatar';
 
 const AboutSection: React.FC = () => {
   return (

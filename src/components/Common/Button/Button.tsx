@@ -22,7 +22,13 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const theme = useTheme();
 
-  const getVariantStyles = () => {
+  const getMuiVariant = () => {
+    if (variant === "primary" || variant === "accent") return "contained";
+    if (variant === "secondary") return "outlined";
+    return "text";
+  };
+
+  const getStyles = () => {
     const baseStyles = {
       fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
       fontWeight: 500,
@@ -41,7 +47,6 @@ const Button: React.FC<ButtonProps> = ({
           : size === "large"
           ? "1.125rem"
           : "1rem",
-      border: "1px solid",
       minWidth: "auto",
     };
 
@@ -49,15 +54,12 @@ const Button: React.FC<ButtonProps> = ({
       primary: {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,
-        borderColor: theme.palette.primary.main,
         "&:hover": {
           backgroundColor: theme.palette.primary.dark,
-          borderColor: theme.palette.primary.dark,
           boxShadow: `0 4px 12px ${theme.palette.primary.main}30`,
         },
       },
       secondary: {
-        backgroundColor: "transparent",
         color: theme.palette.primary.main,
         borderColor: theme.palette.primary.main,
         "&:hover": {
@@ -68,10 +70,8 @@ const Button: React.FC<ButtonProps> = ({
       accent: {
         backgroundColor: theme.palette.secondary.main,
         color: theme.palette.secondary.contrastText,
-        borderColor: theme.palette.secondary.main,
         "&:hover": {
           backgroundColor: theme.palette.secondary.dark,
-          borderColor: theme.palette.secondary.dark,
           boxShadow: `0 4px 12px ${theme.palette.secondary.main}30`,
         },
       },
@@ -88,7 +88,8 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
-      sx={getVariantStyles()}
+      variant={getMuiVariant()}
+      sx={getStyles()}
       className={className}
     >
       {children}

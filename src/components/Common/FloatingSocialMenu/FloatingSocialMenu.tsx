@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, IconButton, Zoom } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import MenuIcon from '@mui/icons-material/Menu';
+import PublicIcon from '@mui/icons-material/Public';
 import CloseIcon from '@mui/icons-material/Close';
 
 const FloatingSocialMenu: React.FC = () => {
@@ -74,7 +74,7 @@ const FloatingSocialMenu: React.FC = () => {
 
       {/* Toggle button */}
       <IconButton onClick={toggleMenu} sx={buttonStyle}>
-        {open ? <CloseIcon fontSize="small" /> : <MenuIcon fontSize="small" />}
+        {open ? <CloseIcon fontSize="small" /> : <PublicIcon fontSize="small" />}
       </IconButton>
     </Box>
   );

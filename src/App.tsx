@@ -1,24 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
-import ThemeProvider from './contexts/ThemeContext';
-import { useTheme } from './contexts/ThemeContextValue';
+import ThemeProvider, { useTheme } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { FeedbackProvider } from './contexts/FeedbackContext';
 
-import Navbar from './components/Common/Navbar/Navbar';
-import FloatingSocialMenu from './components/Common/FloatingSocialMenu/FloatingSocialMenu';
-import ScrollToTopButton from './components/Common/ScrollToTopButton/ScrollToTopButton';
-
-import HomeSection from './pages/Home';
-import AboutSection from './pages/About';
-import ProjectsSection from './pages/Projects';
-import SkillsSection from './pages/Skills';
-import ContactSection from './pages/Contact';
-import LoginPage from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import Layout from './Layout';
+import HomeSection from './pages/Home/Home';
+import AboutSection from './pages/About/About';
+import ProjectsSection from './pages/Projects/Projects';
+import SkillsSection from './pages/Skills/Skills';
+import ContactSection from './pages/Contact/Contact';
+import LoginPage from './pages/Login/Login';
+import Dashboard from './pages/Dashboard/Dashboard';
+import ProjectsDashboard from './pages/Dashboard/ProjectsDashboard';
+import SkillsDashboard from './pages/Dashboard/SkillsDashboard';
 import ProtectedRoute from './routes/ProtectedRoute/ProtectedRoute';
 
 const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -88,20 +86,6 @@ const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   );
 };
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const location = useLocation();
-  const isLoginRoute = location.pathname === '/login';
-
-  return (
-    <>
-      {!isLoginRoute && <Navbar />}
-      {!isLoginRoute && <FloatingSocialMenu />}
-      {!isLoginRoute && <ScrollToTopButton />}
-      {children}
-    </>
-  );
-};
-
 const App: React.FC = () => {
   return (
     <ThemeProvider>
@@ -126,6 +110,22 @@ const App: React.FC = () => {
                     element={
                       <ProtectedRoute>
                         <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/projetos"
+                    element={
+                      <ProtectedRoute>
+                        <ProjectsDashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/habilidades"
+                    element={
+                      <ProtectedRoute>
+                        <SkillsDashboard />
                       </ProtectedRoute>
                     }
                   />

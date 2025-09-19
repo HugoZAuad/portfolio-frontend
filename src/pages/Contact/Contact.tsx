@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container, Grid } from '@mui/material';
-import SectionContainer from '../components/Components_Contact/SectionContainer/SectionContainer';
-import ContactHeader from '../components/Components_Contact/ContactHeader/ContactHeader';
-import ContactCard from '../components/Components_Contact/ContactCard/ContactCard';
-import ContactDetails from '../components/Components_Contact/ContactDetails/ContactDetails';
-import ContactForm from '../components/Components_Contact/ContactForm/ContactForm';
+import SectionContainer from '../../components/Components_Contact/SectionContainer/SectionContainer';
+import ContactHeader from '../../components/Components_Contact/ContactHeader/ContactHeader';
+import ContactCard from '../../components/Components_Contact/ContactCard/ContactCard';
+import ContactDetails from '../../components/Components_Contact/ContactDetails/ContactDetails';
+import ContactForm from '../../components/Components_Contact/ContactForm/ContactForm';
 
 const ContactSection: React.FC = () => {
   return (
