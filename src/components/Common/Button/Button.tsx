@@ -1,12 +1,14 @@
-import React from "react"
-import { Button as MuiButton, useTheme } from "@mui/material"
+import React from "react";
+import { Button as MuiButton, useTheme } from "@mui/material";
 
 interface ButtonProps {
-  children: React.ReactNode
-  onClick?: () => void
-  variant?: "primary" | "secondary" | "accent"
-  size?: "small" | "medium" | "large"
-  className?: string
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: "primary" | "secondary" | "accent";
+  size?: "small" | "medium" | "large";
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -15,8 +17,10 @@ const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   size = "medium",
   className = "",
+  type = "button",
+  disabled = false,
 }) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   const getVariantStyles = () => {
     const baseStyles = {
@@ -39,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
           : "1rem",
       border: "1px solid",
       minWidth: "auto",
-    }
+    };
 
     const variants = {
       primary: {
@@ -71,23 +75,25 @@ const Button: React.FC<ButtonProps> = ({
           boxShadow: `0 4px 12px ${theme.palette.secondary.main}30`,
         },
       },
-    }
+    };
 
     return {
       ...baseStyles,
       ...(variants[variant] || variants.primary),
-    }
-  }
+    };
+  };
 
   return (
     <MuiButton
       onClick={onClick}
+      type={type}
+      disabled={disabled}
       sx={getVariantStyles()}
       className={className}
     >
       {children}
     </MuiButton>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

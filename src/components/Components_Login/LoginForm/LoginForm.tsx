@@ -1,40 +1,49 @@
-import React, { useState } from "react"
-import { Box, TextField, useTheme, Typography } from "@mui/material"
-import Button from "../../Common/Button/Button"
-import axios from "axios"
+import React, { useState } from 'react';
+import { Box, TextField, Typography, useTheme } from '@mui/material';
+import Button from '../../Common/Button/Button';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../contexts/AuthContext';
+import { loginUser } from '../../../utils/authUtils';
+import { validateEmail } from '../../../utils/validation';
 
 const LoginForm: React.FC = () => {
-  const theme = useTheme()
-  const [formData, setFormData] = useState({ email: "", password: "" })
-  const [error, setError] = useState("")
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    try {
-      const response = await axios.post(
-        "https://portfolio-backend-dqxo.onrender.com/auth/login",
-        formData,
-        { withCredentials: true }
-      )
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
-      if (response.data.access_token) {
-        console.log("Login bem-sucedido:", response.data)
-      } else {
-        setError(response.data.message || "Erro ao fazer login")
-      }
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || "Erro inesperado")
-      } else {
-        setError("Erro inesperado")
-      }
+    if (!validateEmail(formData.email)) {
+      setError('Email inválido');
+      setLoading(false);
+      return;
     }
-  }
+
+    try {
+      const response = await loginUser(formData.email, formData.password);
+      if (response.data.access_token) {
+        login(); // atualiza contexto
+        navigate('/dashboard'); // redireciona
+      } else {
+        setError(response.data.message || 'Erro ao fazer login');
+      }
+    } catch {
+      setError('Erro inesperado ao conectar com o servidor');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
@@ -49,7 +58,7 @@ const LoginForm: React.FC = () => {
         required
         sx={{
           mb: 2,
-          "& .MuiOutlinedInput-root": {
+          '& .MuiOutlinedInput-root': {
             backgroundColor: theme.palette.background.paper,
           },
         }}
@@ -66,26 +75,23 @@ const LoginForm: React.FC = () => {
         required
         sx={{
           mb: 3,
-          "& .MuiOutlinedInput-root": {
+          '& .MuiOutlinedInput-root': {
             backgroundColor: theme.palette.background.paper,
           },
         }}
       />
 
       {error && (
-        <Typography
-          variant="body2"
-          sx={{ color: theme.palette.error.main, mb: 2 }}
-        >
+        <Typography variant="body2" sx={{ color: theme.palette.error.main, mb: 2 }}>
           {error}
         </Typography>
       )}
 
-      <Button variant="primary" size="large">
-        Entrar
+      <Button type="submit" variant="primary" size="large" disabled={loading}>
+        {loading ? 'Entrando...' : 'Entrar'}
       </Button>
     </Box>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

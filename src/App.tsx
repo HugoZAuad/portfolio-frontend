@@ -5,6 +5,7 @@ import { CssBaseline } from '@mui/material';
 
 import ThemeProvider from './contexts/ThemeContext';
 import { useTheme } from './contexts/ThemeContextValue';
+import { AuthProvider } from './contexts/AuthContext';
 
 import Navbar from './components/Common/Navbar/Navbar';
 import FloatingSocialMenu from './components/Common/FloatingSocialMenu/FloatingSocialMenu';
@@ -16,6 +17,8 @@ import ProjectsSection from './pages/Projects';
 import SkillsSection from './pages/Skills';
 import ContactSection from './pages/Contact';
 import LoginPage from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import ProtectedRoute from './routes/ProtectedRoute/ProtectedRoute';
 
 const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme } = useTheme();
@@ -101,24 +104,34 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <Router>
-        <ThemeWrapper>
-          <Layout>
-            <Routes>
-              <Route path="/" element={
-                <>
-                  <div id="home"><HomeSection /></div>
-                  <div id="about"><AboutSection /></div>
-                  <div id="projects"><ProjectsSection /></div>
-                  <div id="skills"><SkillsSection /></div>
-                  <div id="contact"><ContactSection /></div>
-                </>
-              } />
-              <Route path="/login" element={<LoginPage />} />
-            </Routes>
-          </Layout>
-        </ThemeWrapper>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <ThemeWrapper>
+            <Layout>
+              <Routes>
+                <Route path="/" element={
+                  <>
+                    <div id="home"><HomeSection /></div>
+                    <div id="about"><AboutSection /></div>
+                    <div id="projects"><ProjectsSection /></div>
+                    <div id="skills"><SkillsSection /></div>
+                    <div id="contact"><ContactSection /></div>
+                  </>
+                } />
+                <Route path="/login" element={<LoginPage />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </Layout>
+          </ThemeWrapper>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 };
