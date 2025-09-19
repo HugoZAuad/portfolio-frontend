@@ -9,6 +9,8 @@ import AboutSection from './pages/About';
 import ProjectsSection from './pages/Projects';
 import SkillsSection from './pages/Skills';
 import ContactSection from './pages/Contact';
+import FloatingSocialMenu from './components/Common/FloatingSocialMenu/FloatingSocialMenu'
+import ScrollToTopButton from './components/Common/ScrollToTopButton/ScrollToTopButton'
 
 const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme } = useTheme();
@@ -80,6 +82,8 @@ const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 const App: React.FC = () => {
   return (
     <ThemeProvider>
+      <FloatingSocialMenu />
+      <ScrollToTopButton />
       <ThemeWrapper>
         <Navbar />
         <div id="home">
