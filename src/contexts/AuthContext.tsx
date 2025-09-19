@@ -22,19 +22,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const verify = async () => {
-      const result = await checkAuth();
-      setIsAuthenticated(result);
+    const storedAuth = localStorage.getItem('isAuthenticated');
+    if (storedAuth === 'true') {
+      setIsAuthenticated(true);
       setLoading(false);
-    };
-    verify();
+    } else {
+      checkAuth().then((result) => {
+        setIsAuthenticated(result);
+        setLoading(false);
+        localStorage.setItem('isAuthenticated', String(result));
+      });
+    }
   }, []);
 
-  const login = () => setIsAuthenticated(true);
+  const login = () => {
+    setIsAuthenticated(true);
+    localStorage.setItem('isAuthenticated', 'true');
+  };
 
   const logout = async () => {
     await logoutUser();
     setIsAuthenticated(false);
+    localStorage.removeItem('isAuthenticated');
   };
 
   return (
