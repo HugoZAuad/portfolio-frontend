@@ -1,35 +1,105 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import ThemeProvider from './contexts/ThemeContext'; 
+import { useTheme } from './contexts/ThemeContextValue'; 
+import Navbar from './components/Navbar';
+import HomeSection from './pages/Home';
+import AboutSection from './pages/About';
+import ProjectsSection from './pages/Projects';
+import SkillsSection from './pages/Skills';
+import ContactSection from './pages/Contact';
 
-function App() {
-  const [count, setCount] = useState(0)
+const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { theme } = useTheme();
+
+  const muiTheme = createTheme({
+    palette: {
+      mode: theme,
+      primary: {
+        main: theme === 'dark' ? '#6366f1' : '#4f46e5',
+      },
+      secondary: {
+        main: theme === 'dark' ? '#8b5cf6' : '#7c3aed',
+      },
+      background: {
+        default: theme === 'dark' ? '#0f0f23' : '#fafafa',
+        paper: theme === 'dark' ? '#1a1a2e' : '#ffffff',
+      },
+      text: {
+        primary: theme === 'dark' ? '#ffffff' : '#1a1a1a',
+        secondary: theme === 'dark' ? '#a1a1aa' : '#6b7280',
+      },
+    },
+    typography: {
+      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+      h1: {
+        fontSize: '3rem',
+        fontWeight: 700,
+        letterSpacing: '-0.025em',
+      },
+      h2: {
+        fontSize: '2.25rem',
+        fontWeight: 600,
+        letterSpacing: '-0.025em',
+      },
+      h3: {
+        fontSize: '1.875rem',
+        fontWeight: 600,
+      },
+      body1: {
+        fontSize: '1.125rem',
+        lineHeight: 1.75,
+      },
+    },
+    shape: {
+      borderRadius: 8,
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: 'none',
+            fontWeight: 500,
+            borderRadius: 8,
+            padding: '8px 16px',
+          },
+        },
+      },
+    },
+  });
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="text-4xl font-bold text-sky-500">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <MuiThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      {children}
+    </MuiThemeProvider>
+  );
+};
 
-export default App
+const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <ThemeWrapper>
+        <Navbar />
+        <div id="home">
+          <HomeSection />
+        </div>
+        <div id="about">
+          <AboutSection />
+        </div>
+        <div id="projects">
+          <ProjectsSection />
+        </div>
+        <div id="skills">
+          <SkillsSection />
+        </div>
+        <div id="contact">
+          <ContactSection />
+        </div>
+      </ThemeWrapper>
+    </ThemeProvider>
+  );
+};
+
+export default App;
