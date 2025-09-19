@@ -3,6 +3,7 @@ import { Box, TextField, Typography, useTheme } from '@mui/material';
 import Button from '../../Common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
+import { useFeedback } from '../../../contexts/FeedbackContext';
 import { loginUser } from '../../../utils/authUtils';
 import { validateEmail } from '../../../utils/validation';
 
@@ -10,6 +11,7 @@ const LoginForm: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { showFeedback } = useFeedback();
 
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
@@ -33,64 +35,82 @@ const LoginForm: React.FC = () => {
     try {
       const response = await loginUser(formData.email, formData.password);
       if (response.data.access_token) {
-        login(); // atualiza contexto
-        navigate('/dashboard'); // redireciona
+        login();
+        showFeedback('Login realizado com sucesso!', 'success');
+        navigate('/dashboard');
       } else {
-        setError(response.data.message || 'Erro ao fazer login');
+        showFeedback(response.data.message || 'Erro ao fazer login', 'error');
       }
     } catch {
-      setError('Erro inesperado ao conectar com o servidor');
+      showFeedback('Erro inesperado ao conectar com o servidor', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
-      <TextField
-        fullWidth
-        label="Email"
-        name="email"
-        type="email"
-        value={formData.email}
-        onChange={handleChange}
-        margin="normal"
-        required
+    <>
+      {/* Botão fixo no canto superior esquerdo */}
+      <Box
         sx={{
-          mb: 2,
-          '& .MuiOutlinedInput-root': {
-            backgroundColor: theme.palette.background.paper,
-          },
+          position: 'fixed',
+          top: 16,
+          left: 16,
+          zIndex: 1000,
         }}
-      />
+      >
+        <Button variant="secondary" size="small" onClick={() => navigate('/')}>
+          Voltar para o site
+        </Button>
+      </Box>
 
-      <TextField
-        fullWidth
-        label="Senha"
-        name="password"
-        type="password"
-        value={formData.password}
-        onChange={handleChange}
-        margin="normal"
-        required
-        sx={{
-          mb: 3,
-          '& .MuiOutlinedInput-root': {
-            backgroundColor: theme.palette.background.paper,
-          },
-        }}
-      />
+      {/* Formulário de login */}
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 10 }}>
+        <TextField
+          fullWidth
+          label="Email"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          margin="normal"
+          required
+          sx={{
+            mb: 2,
+            '& .MuiOutlinedInput-root': {
+              backgroundColor: theme.palette.background.paper,
+            },
+          }}
+        />
 
-      {error && (
-        <Typography variant="body2" sx={{ color: theme.palette.error.main, mb: 2 }}>
-          {error}
-        </Typography>
-      )}
+        <TextField
+          fullWidth
+          label="Senha"
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          margin="normal"
+          required
+          sx={{
+            mb: 3,
+            '& .MuiOutlinedInput-root': {
+              backgroundColor: theme.palette.background.paper,
+            },
+          }}
+        />
 
-      <Button type="submit" variant="primary" size="large" disabled={loading}>
-        {loading ? 'Entrando...' : 'Entrar'}
-      </Button>
-    </Box>
+        {error && (
+          <Typography variant="body2" sx={{ color: theme.palette.error.main, mb: 2 }}>
+            {error}
+          </Typography>
+        )}
+
+        <Button type="submit" variant="primary" size="large" disabled={loading}>
+          {loading ? 'Entrando...' : 'Entrar'}
+        </Button>
+      </Box>
+    </>
   );
 };
 

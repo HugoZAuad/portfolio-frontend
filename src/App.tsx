@@ -6,6 +6,7 @@ import { CssBaseline } from '@mui/material';
 import ThemeProvider from './contexts/ThemeContext';
 import { useTheme } from './contexts/ThemeContextValue';
 import { AuthProvider } from './contexts/AuthContext';
+import { FeedbackProvider } from './contexts/FeedbackContext';
 
 import Navbar from './components/Common/Navbar/Navbar';
 import FloatingSocialMenu from './components/Common/FloatingSocialMenu/FloatingSocialMenu';
@@ -105,32 +106,34 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Router>
-          <ThemeWrapper>
-            <Layout>
-              <Routes>
-                <Route path="/" element={
-                  <>
-                    <div id="home"><HomeSection /></div>
-                    <div id="about"><AboutSection /></div>
-                    <div id="projects"><ProjectsSection /></div>
-                    <div id="skills"><SkillsSection /></div>
-                    <div id="contact"><ContactSection /></div>
-                  </>
-                } />
-                <Route path="/login" element={<LoginPage />} />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
-            </Layout>
-          </ThemeWrapper>
-        </Router>
+        <FeedbackProvider>
+          <Router>
+            <ThemeWrapper>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={
+                    <>
+                      <div id="home"><HomeSection /></div>
+                      <div id="about"><AboutSection /></div>
+                      <div id="projects"><ProjectsSection /></div>
+                      <div id="skills"><SkillsSection /></div>
+                      <div id="contact"><ContactSection /></div>
+                    </>
+                  } />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </Layout>
+            </ThemeWrapper>
+          </Router>
+        </FeedbackProvider>
       </AuthProvider>
     </ThemeProvider>
   );
