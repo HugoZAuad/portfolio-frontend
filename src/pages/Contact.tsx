@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Button from '../components/Button';
+import Button from '../components/Common/Button/Button';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',

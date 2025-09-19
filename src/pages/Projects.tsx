@@ -3,7 +3,7 @@ import { Container, Typography, Box, Grid, Card, CardContent, CardActions, Chip,
 import { styled } from '@mui/material/styles';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
-import Button from '../components/Button';
+import Button from '../components/Common/Button/Button';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',

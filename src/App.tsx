@@ -3,7 +3,7 @@ import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/st
 import { CssBaseline } from '@mui/material';
 import ThemeProvider from './contexts/ThemeContext'; 
 import { useTheme } from './contexts/ThemeContextValue'; 
-import Navbar from './components/Navbar';
+import Navbar from './components/Common/Navbar/Navbar';
 import HomeSection from './pages/Home';
 import AboutSection from './pages/About';
 import ProjectsSection from './pages/Projects';
