@@ -2,13 +2,12 @@ import React from "react"
 import { Typography, Grid } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import DashboardCard from "../../components/Components_Dashboard/DashboardCard/DashboardCard"
-import DashboardLayout from "../../components/Components_Dashboard/DashboardLayout/DashboardLayout"
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate()
 
   return (
-    <DashboardLayout>
+    <div>
       <Typography variant="h4" sx={{ mb: 4 }}>
         Painel de Controle
       </Typography>
@@ -29,7 +28,7 @@ const Dashboard: React.FC = () => {
           />
         </Grid>
       </Grid>
-    </DashboardLayout>
+    </div>
   )
 }
 

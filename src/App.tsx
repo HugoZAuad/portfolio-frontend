@@ -7,7 +7,9 @@ import ThemeProvider, { useTheme } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { FeedbackProvider } from './contexts/FeedbackContext';
 
-import Layout from './Layout';
+import PublicLayout from './components/Common/Layout/PublicLayout/PublicLayout';
+import DashboardLayout from './components/Components_Dashboard/DashboardLayout/DashboardLayout';
+
 import HomeSection from './pages/Home/Home';
 import AboutSection from './pages/About/About';
 import ProjectsSection from './pages/Projects/Projects';
@@ -93,44 +95,51 @@ const App: React.FC = () => {
         <FeedbackProvider>
           <Router>
             <ThemeWrapper>
-              <Layout>
-                <Routes>
-                  <Route path="/" element={
-                    <>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <PublicLayout>
                       <div id="home"><HomeSection /></div>
                       <div id="about"><AboutSection /></div>
                       <div id="projects"><ProjectsSection /></div>
                       <div id="skills"><SkillsSection /></div>
                       <div id="contact"><ContactSection /></div>
-                    </>
-                  } />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route
-                    path="/dashboard"
-                    element={
-                      <ProtectedRoute>
+                    </PublicLayout>
+                  }
+                />
+                <Route path="/login" element={<LoginPage />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
                         <Dashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/dashboard/projetos"
-                    element={
-                      <ProtectedRoute>
+                      </DashboardLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/projetos"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
                         <ProjectsDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/dashboard/habilidades"
-                    element={
-                      <ProtectedRoute>
+                      </DashboardLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/habilidades"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardLayout>
                         <SkillsDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </Layout>
+                      </DashboardLayout>
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
             </ThemeWrapper>
           </Router>
         </FeedbackProvider>
