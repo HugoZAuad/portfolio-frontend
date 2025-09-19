@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,20 +12,20 @@ import {
   ListItemText,
   useTheme,
   useScrollTrigger,
-} from "@mui/material"
-import MenuIcon from "@mui/icons-material/Menu"
-
-import ThemeToggle from "../ThemeToggle/ThemeToggle"
+  Box,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const Navbar: React.FC = () => {
-  const theme = useTheme()
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("home")
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 100,
-  })
+  });
 
   const navItems = [
     { id: "home", label: "Home" },
@@ -33,37 +33,37 @@ const Navbar: React.FC = () => {
     { id: "projects", label: "Projetos" },
     { id: "skills", label: "Skills" },
     { id: "contact", label: "Contato" },
-  ]
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map((item) => item.id)
-      const scrollPosition = window.scrollY + 100
+      const sections = navItems.map((item) => item.id);
+      const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i])
+        const section = document.getElementById(sections[i]);
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i])
-          break
+          setActiveSection(sections[i]);
+          break;
         }
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
+    setMobileOpen(!mobileOpen);
+  };
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-    setMobileOpen(false)
-  }
+    setMobileOpen(false);
+  };
 
   const drawer = (
     <List>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
         </ListItem>
       ))}
     </List>
-  )
+  );
 
   return (
     <>
@@ -126,18 +126,23 @@ const Navbar: React.FC = () => {
                 color: "inherit",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = theme.palette.primary.dark
+                e.currentTarget.style.color = theme.palette.primary.dark;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = "inherit"
+                e.currentTarget.style.color = "inherit";
               }}
             >
               Hugo Zeymer Auad
             </a>
           </Typography>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-1">
+          {/* Desktop Navigation — escondido se menu lateral estiver aberto */}
+          <Box
+            sx={{
+              display: { xs: "none", md: mobileOpen ? "none" : "flex" },
+              gap: 1,
+            }}
+          >
             {navItems.map((item) => (
               <Button
                 key={item.id}
@@ -161,7 +166,7 @@ const Navbar: React.FC = () => {
                 {item.label}
               </Button>
             ))}
-          </div>
+          </Box>
 
           <ThemeToggle />
 
@@ -184,7 +189,7 @@ const Navbar: React.FC = () => {
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true,
         }}
         sx={{
           display: { xs: "block", md: "none" },
@@ -198,7 +203,7 @@ const Navbar: React.FC = () => {
         {drawer}
       </Drawer>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
