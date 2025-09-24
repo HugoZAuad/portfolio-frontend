@@ -9,7 +9,7 @@ import {
   TableContainer,
 } from '@mui/material';
 import SkillRow from '../SkillRow/SkillRow';
-import type { Skill } from '../../../services/skillService/skillService';
+import type { Skill } from '../../../services/skillService/skillsService.types';
 
 
 interface Props {

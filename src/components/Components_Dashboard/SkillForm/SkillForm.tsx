@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Stack } from '@mui/material';
-import type { Skill } from '../../../services/skillService/skillService';
+import type { Skill } from '../../../services/skillService/skillsService.types';
 
 interface Props {
   onSubmit: (skill: Skill) => void;

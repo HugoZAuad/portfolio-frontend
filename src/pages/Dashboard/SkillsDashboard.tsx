@@ -8,7 +8,7 @@ import {
   updateSkill,
   deleteSkill,
 } from '../../services/skillService/skillService';
-import type { Skill } from '../../services/skillService/skillService';
+import type { Skill } from '../../services/skillService/skillsService.types';
 
 const SkillsDashboard: React.FC = () => {
   const [skills, setSkills] = useState<Skill[]>([]);

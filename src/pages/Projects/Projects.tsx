@@ -5,7 +5,7 @@ import SectionHeader from '../../components/Components_Projects/SectionHeader/Se
 import ProjectList from '../../components/Components_Projects/ProjectList/ProjectList';
 import PaginationControls from '../../components/Components_Projects/PaginationControls/PaginationControls';
 import { getProjects } from '../../services/projectService/projectService';
-import type { Project } from '../../services/projectService/projectService';
+import type { Project } from '../../services/projectService/projectService.types';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Stack } from '@mui/material';
-import type { Project } from '../../../services/projectService/projectService';
+import type { Project } from '../../../services/projectService/projectService.types';
 
 interface Props {
   onSubmit: (project: Project) => void;

@@ -9,7 +9,7 @@ import {
   TableContainer,
 } from '@mui/material';
 import ProjectRow from '../ProjectRow/ProjectRow';
-import type { Project } from '../../../services/projectService/projectService';
+import type { Project } from '../../../services/projectService/projectService.types';
 
 interface Props {
   projects: Project[];

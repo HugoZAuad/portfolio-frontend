@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import SectionHeader from '../../components/Components_Skills/SectionHeader/SectionHeader';
 import SkillList from '../../components/Components_Skills/SkillList/SkillList';
 import { getSkills } from '../../services/skillService/skillService';
-import type { Skill } from '../../services/skillService/skillService';
+import type { Skill } from '../../services/skillService/skillsService.types';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',

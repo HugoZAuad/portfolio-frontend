@@ -9,7 +9,7 @@ import {
   updateProject,
   deleteProject,
 } from '../../services/projectService/projectService';
-import type { Project, PaginatedProjectsResponse } from '../../services/projectService/projectService';
+import type { Project, PaginatedProjectsResponse } from '../../services/projectService/projectService.types';
 
 const ProjectsDashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);

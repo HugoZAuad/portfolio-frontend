@@ -2,7 +2,7 @@ import React from 'react';
 import { TableRow, TableCell, IconButton, Stack } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import type { Project } from '../../../services/projectService/projectService';
+import type { Project } from '../../../services/projectService/projectService.types';
 
 interface Props {
   project: Project;
