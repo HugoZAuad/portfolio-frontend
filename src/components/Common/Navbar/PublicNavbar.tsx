@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
   IconButton,
   Drawer,
@@ -16,6 +15,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import CinematicName from "../CinematicName/CinematicName"; // ajuste o caminho conforme sua estrutura
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
     { id: "home", label: "Home" },
     { id: "about", label: "Sobre Mim" },
     { id: "projects", label: "Projetos" },
-    { id: "skills", label: "Skills" },
+    { id: "skills", label: "Habilidades" },
     { id: "contact", label: "Contato" },
   ];
 
@@ -107,34 +107,9 @@ const Navbar: React.FC = () => {
         }}
       >
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontWeight: 700,
-              color: theme.palette.primary.main,
-              cursor: "pointer",
-            }}
-            onClick={() => scrollToSection("sobre-mim")}
-          >
-            <a
-              href="https://www.linkedin.com/in/hugozauad/"
-              target="_blank"
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = theme.palette.primary.dark;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "inherit";
-              }}
-            >
-              Hugo Zeymer Auad
-            </a>
-          </Typography>
+          <Box onClick={() => scrollToSection("sobre-mim")} sx={{ flexGrow: 1 }}>
+            <CinematicName />
+          </Box>
 
           {/* Desktop Navigation — escondido se menu lateral estiver aberto */}
           <Box

@@ -12,9 +12,9 @@ const ThemeToggle: React.FC = () => {
       onClick={toggleTheme}
       color="inherit"
       sx={{
-        color: theme === 'dark' ? '#00ffff' : '#ff00ff',
+        color: theme === 'dark' ? '#6366f1' : '#4f46e5',
         '&:hover': {
-          backgroundColor: theme === 'dark' ? 'rgba(0, 255, 255, 0.1)' : 'rgba(255, 0, 255, 0.1)',
+          backgroundColor: theme === 'dark' ? 'rgba(139, 92, 246, 0.1)' : 'rgba(124, 58, 237, 0.1)',
         },
       }}
     >
