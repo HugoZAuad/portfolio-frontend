@@ -7,6 +7,7 @@ import {
   Chip,
   Box,
   useTheme,
+  CardMedia,
 } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -16,9 +17,10 @@ import { motion } from 'framer-motion';
 interface ProjectProps {
   title: string;
   description: string;
-  technologies: string[];
+  technologies?: string[];
   githubUrl: string;
   liveUrl: string;
+  imageUrl?: string;
   index: number;
 }
 
@@ -30,9 +32,10 @@ const fadeInUp = {
 const ProjectCard: React.FC<ProjectProps> = ({
   title,
   description,
-  technologies,
+  technologies = [],
   githubUrl,
   liveUrl,
+  imageUrl,
   index,
 }) => {
   const theme = useTheme();
@@ -56,6 +59,14 @@ const ProjectCard: React.FC<ProjectProps> = ({
           },
         }}
       >
+        {imageUrl && (
+          <CardMedia
+            component="img"
+            height="180"
+            image={imageUrl}
+            alt={`Imagem do projeto ${title}`}
+          />
+        )}
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
             {title}

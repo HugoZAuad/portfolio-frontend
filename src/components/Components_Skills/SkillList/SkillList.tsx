@@ -19,6 +19,9 @@ const SkillList: React.FC<Props> = ({ title, skills }) => {
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.divider}`,
         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         '&:hover': {
           transform: 'translateY(-4px)',
           boxShadow: `0 8px 24px ${theme.palette.primary.main}10`,
@@ -36,7 +39,15 @@ const SkillList: React.FC<Props> = ({ title, skills }) => {
       >
         {title}
       </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          width: '100%',
+          maxWidth: 400,
+        }}
+      >
         {skills.map((skill) => (
           <SkillCard key={skill.name} name={skill.name} level={skill.level} />
         ))}

@@ -4,7 +4,8 @@ import { styled } from '@mui/material/styles';
 import SectionHeader from '../../components/Components_Projects/SectionHeader/SectionHeader';
 import ProjectList from '../../components/Components_Projects/ProjectList/ProjectList';
 import PaginationControls from '../../components/Components_Projects/PaginationControls/PaginationControls';
-import { fetchProjects } from '../../services/projectService/projectService';
+import { getProjects } from '../../services/projectService/projectService';
+import type { Project } from '../../services/projectService/projectService';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
@@ -13,16 +14,16 @@ const SectionContainer = styled(Box)(({ theme }) => ({
 }));
 
 const ProjectsSection: React.FC = () => {
-  const [projects, setProjects] = useState([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   useEffect(() => {
     const loadProjects = async () => {
       try {
-        const data = await fetchProjects(page);
+        const data = await getProjects(page);
         setProjects(data.projects);
-        setHasMore(data.hasMore); 
+        setHasMore(data.hasMore);
       } catch (error) {
         console.error('Erro ao carregar projetos:', error);
       }

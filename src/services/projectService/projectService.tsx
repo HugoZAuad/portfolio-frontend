@@ -6,6 +6,7 @@ export type Project = {
   description: string;
   githubUrl: string;
   liveUrl: string;
+  imageUrl?: string;
 };
 
 export type PaginatedProjectsResponse = {
@@ -18,7 +19,7 @@ const BASE_URL = 'https://portfolio-backend-dqxo.onrender.com/projects';
 /**
  * Lista projetos com paginação
  */
-export const fetchProjects = async (
+export const getProjects = async (
   page: number,
   limit: number = 6
 ): Promise<PaginatedProjectsResponse> => {
@@ -31,7 +32,7 @@ export const fetchProjects = async (
 /**
  * Lista todos os projetos sem paginação (para dashboard)
  */
-export const getProjects = async (): Promise<Project[]> => {
+export const getAllProjects = async (): Promise<Project[]> => {
   const response = await axios.get<Project[]>(BASE_URL);
   return response.data;
 };
@@ -57,4 +58,24 @@ export const updateProject = async (id: string, project: Project): Promise<Proje
  */
 export const deleteProject = async (id: string): Promise<void> => {
   await axios.delete(`${BASE_URL}/${id}`);
+};
+
+/**
+ * Upload de imagem (retorna a URL da imagem hospedada)
+ */
+export const uploadImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const response = await axios.post<{ imageUrl: string }>(
+    'https://portfolio-backend-dqxo.onrender.com/upload',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+
+  return response.data.imageUrl;
 };
