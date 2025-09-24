@@ -34,12 +34,18 @@ const LoginForm: React.FC = () => {
 
     try {
       const response = await loginUser(formData.email, formData.password);
-      if (response.data.access_token) {
-        login();
+
+      const token = response.data?.access_token;
+      if (token) {
+        // ✅ Salva o token e estado de autenticação
+        localStorage.setItem('token', token);
+        localStorage.setItem('isAuthenticated', 'true');
+
+        login(); // atualiza contexto se necessário
         showFeedback('Login realizado com sucesso!', 'success');
         navigate('/dashboard');
       } else {
-        showFeedback(response.data.message || 'Erro ao fazer login', 'error');
+        showFeedback(response.data?.message || 'Erro ao fazer login', 'error');
       }
     } catch {
       showFeedback('Erro inesperado ao conectar com o servidor', 'error');
