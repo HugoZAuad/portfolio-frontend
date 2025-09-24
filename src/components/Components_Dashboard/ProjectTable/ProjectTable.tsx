@@ -24,7 +24,6 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
         <TableRow>
           <TableCell>Título</TableCell>
           <TableCell>Descrição</TableCell>
-          <TableCell>Tecnologias</TableCell>
           <TableCell>Ações</TableCell>
         </TableRow>
       </TableHead>
