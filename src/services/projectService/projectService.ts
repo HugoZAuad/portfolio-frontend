@@ -28,16 +28,19 @@ export const createProject = async (
   formData.append('title', project.title);
   formData.append('description', project.description);
   formData.append('type', project.type);
-  
+
   if (project.linkRepo) formData.append('linkRepo', project.linkRepo);
   if (project.linkDeploy) formData.append('linkDeploy', project.linkDeploy);
+  if (imageFile) formData.append('image', imageFile);
 
-  
-  if (imageFile) {
-    formData.append('image', imageFile);
-  }
+  const token = localStorage.getItem('token');
 
-  const response = await api.post<ProjectResponse>('/projects', formData);
+  const response = await api.post<ProjectResponse>('/projects', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return response.data;
 };
