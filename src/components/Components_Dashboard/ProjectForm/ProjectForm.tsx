@@ -16,7 +16,7 @@ interface Props {
   initialData?: Project;
 }
 
-const projectTypes: ProjectType[] = ['Frontend', 'Backend', 'Fullstack'];
+const projectTypes: ProjectType[] = ['frontend', 'backend', 'fullstack'];
 
 const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   const [form, setForm] = useState<Project>({
@@ -25,7 +25,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
     linkRepo: '',
     linkDeploy: '',
     imageUrl: '',
-    type: 'Fullstack',
+    type: 'fullstack',
   });
 
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
@@ -54,7 +54,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
         linkRepo: '',
         linkDeploy: '',
         imageUrl: '',
-        type: 'Fullstack',
+        type: 'fullstack',
       });
       setImageFile(undefined);
     } catch (error) {

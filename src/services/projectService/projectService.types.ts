@@ -1,4 +1,4 @@
-export type ProjectType = 'Frontend' | 'Backend' | 'Fullstack';
+export type ProjectType = 'frontend' | 'backend' | 'fullstack';
 
 export interface Project {
   _id?: string;
@@ -12,7 +12,7 @@ export interface Project {
 
 export interface ProjectResponse {
   message: string;
-  project: Project;
+  data: Project;
 }
 
 export interface DeleteResponse {
