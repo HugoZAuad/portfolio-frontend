@@ -11,7 +11,7 @@ const HeroSubtitle: React.FC = () => {
         mb: 6,
         color: theme.palette.text.secondary,
         fontWeight: 400,
-        fontSize: { xs: '0.25rem', md: '0.5rem', lg: '1.75rem' },
+        fontSize: { xs: '0.85rem', md: '1rem', lg: '1.75rem' },
         lineHeight: 1.4,
       }}
     >
