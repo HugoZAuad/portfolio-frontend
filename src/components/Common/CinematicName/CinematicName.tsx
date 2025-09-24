@@ -7,7 +7,7 @@ const CinematicName: React.FC = () => {
   const fullName = 'Zeymer Auad';
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: number;
     if (hovered && typedText.length < fullName.length) {
       timeout = setTimeout(() => {
         setTypedText(fullName.slice(0, typedText.length + 1));
