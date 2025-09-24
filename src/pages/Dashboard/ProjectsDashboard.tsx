@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Container } from '@mui/material';
 import SectionHeader from '../../components/Components_Dashboard/SectionHeader/SectionHeader';
 import ProjectForm from '../../components/Components_Dashboard/ProjectForm/ProjectForm';
@@ -9,24 +9,26 @@ import {
   updateProject,
   deleteProject,
 } from '../../services/projectService/projectService';
-import type { Project } from '../../services/projectService/projectService';
+import type { Project, PaginatedProjectsResponse } from '../../services/projectService/projectService';
 
 const ProjectsDashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingProject, setEditingProject] = useState<Project | undefined>(undefined);
+  const [page] = useState(1);
+  const [limit] = useState(10);
 
-  const loadProjects = async (): Promise<void> => {
+  const loadProjects = useCallback(async (): Promise<void> => {
     try {
-      const data = await getProjects();
-      setProjects(data);
+      const response: PaginatedProjectsResponse = await getProjects(page, limit);
+      setProjects(response.projects); // ✅ extrai corretamente os projetos
     } catch (error) {
       console.error('Erro ao carregar projetos:', error);
     }
-  };
+  }, [page, limit]);
 
   useEffect(() => {
     loadProjects();
-  }, []);
+  }, [loadProjects]);
 
   const handleCreateOrUpdate = async (project: Project): Promise<void> => {
     try {
