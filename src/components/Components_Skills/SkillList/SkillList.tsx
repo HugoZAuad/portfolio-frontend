@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import SkillCard from '../SkillCard/SkillCard';
-import type { Skill } from '../../../services/skillService/skillService';
+import type { Skill } from '../../../services/skillService/skillsService.types';
 
 interface Props {
   title: string;
