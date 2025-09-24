@@ -1,5 +1,12 @@
 import React from "react"
-import { AppBar, Toolbar, Typography, IconButton } from "@mui/material"
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button,
+  Box,
+} from "@mui/material"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { useAuth } from "../../../contexts/AuthContext"
 import { useFeedback } from "../../../contexts/FeedbackContext"
@@ -26,9 +33,18 @@ const DashboardNavbar: React.FC = () => {
         <Typography variant="h6" sx={{ fontWeight: 600 }}>
           Painel de Hugo
         </Typography>
-        <IconButton color="inherit" onClick={handleLogout}>
-          <LogoutIcon />
-        </IconButton>
+
+        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+          <Button color="inherit" onClick={() => navigate("/dashboard/projetos")}>
+            Projetos
+          </Button>
+          <Button color="inherit" onClick={() => navigate("/dashboard/habilidades")}>
+            Habilidades
+          </Button>
+          <IconButton color="inherit" onClick={handleLogout}>
+            <LogoutIcon />
+          </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   )
