@@ -1,27 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Button, Stack } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import type { Project } from '../../../services/projectService/projectService.types';
 
 interface Props {
-  onSubmit: (project: Project) => void;
+  onSubmit: (project: Project, imageFile?: File) => void;
   initialData?: Project;
 }
+
+const projectTypes = ['Frontend', 'Backend', 'Fullstack'] as const;
 
 const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   const [form, setForm] = useState<Project>({
     title: '',
     description: '',
-    githubUrl: '',
-    liveUrl: '',
+    linkRepo: '',
+    linkDeploy: '',
     imageUrl: '',
+    type: 'Fullstack',
   });
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
 
   useEffect(() => {
     if (initialData) {
-      const { title, description, githubUrl, liveUrl, imageUrl } = initialData;
-      setForm({ title, description, githubUrl, liveUrl, imageUrl });
+      const { title, description, linkRepo, linkDeploy, imageUrl, type } = initialData;
+      setForm({ title, description, linkRepo, linkDeploy, imageUrl, type });
     }
   }, [initialData]);
 
@@ -40,21 +52,22 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
     });
 
     const data = await response.json();
-    return data.imageUrl; // deve ser retornado pela API
+    return data.imageUrl;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const uploadedImageUrl = await handleImageUpload();
-    onSubmit({ ...form, imageUrl: uploadedImageUrl });
+    onSubmit({ ...form, imageUrl: uploadedImageUrl }, imageFile);
     setForm({
       title: '',
       description: '',
-      githubUrl: '',
-      liveUrl: '',
+      linkRepo: '',
+      linkDeploy: '',
       imageUrl: '',
+      type: 'Fullstack',
     });
-    setImageFile(null);
+    setImageFile(undefined);
   };
 
   return (
@@ -75,17 +88,31 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
           fullWidth
         />
         <TextField
-          label="GitHub URL"
-          value={form.githubUrl}
-          onChange={(e) => handleChange('githubUrl', e.target.value)}
+          label="Link do Repositório"
+          value={form.linkRepo}
+          onChange={(e) => handleChange('linkRepo', e.target.value)}
           fullWidth
         />
         <TextField
-          label="Live URL"
-          value={form.liveUrl}
-          onChange={(e) => handleChange('liveUrl', e.target.value)}
+          label="Link de Deploy"
+          value={form.linkDeploy}
+          onChange={(e) => handleChange('linkDeploy', e.target.value)}
           fullWidth
         />
+        <FormControl fullWidth>
+          <InputLabel>Tipo do Projeto</InputLabel>
+          <Select
+            value={form.type}
+            label="Tipo do Projeto"
+            onChange={(e) => handleChange('type', e.target.value)}
+          >
+            {projectTypes.map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <Button variant="outlined" component="label">
           Selecionar Imagem
           <input

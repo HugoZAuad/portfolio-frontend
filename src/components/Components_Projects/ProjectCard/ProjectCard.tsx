@@ -18,9 +18,10 @@ interface ProjectProps {
   title: string;
   description: string;
   technologies?: string[];
-  githubUrl: string;
-  liveUrl: string;
+  linkRepo: string;
+  linkDeploy: string;
   imageUrl?: string;
+  type: 'Frontend' | 'Backend' | 'Fullstack';
   index: number;
 }
 
@@ -33,12 +34,20 @@ const ProjectCard: React.FC<ProjectProps> = ({
   title,
   description,
   technologies = [],
-  githubUrl,
-  liveUrl,
+  linkRepo,
+  linkDeploy,
   imageUrl,
+  type,
   index,
 }) => {
   const theme = useTheme();
+
+  const typeColor =
+    type === 'Frontend'
+      ? 'primary'
+      : type === 'Backend'
+      ? 'secondary'
+      : 'success';
 
   return (
     <motion.div
@@ -71,6 +80,12 @@ const ProjectCard: React.FC<ProjectProps> = ({
           <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
             {title}
           </Typography>
+          <Chip
+            label={type}
+            color={typeColor}
+            size="small"
+            sx={{ mb: 2, fontWeight: 500 }}
+          />
           <Typography variant="body2" sx={{ mb: 3, color: theme.palette.text.secondary }}>
             {description}
           </Typography>
@@ -91,12 +106,12 @@ const ProjectCard: React.FC<ProjectProps> = ({
         </CardContent>
         <CardActions sx={{ p: 2, pt: 0 }}>
           <Box sx={{ mr: 1 }}>
-            <Button variant="secondary" size="small" onClick={() => window.open(githubUrl, '_blank')}>
+            <Button variant="secondary" size="small" onClick={() => window.open(linkRepo, '_blank')}>
               <GitHubIcon sx={{ mr: 1, fontSize: '1rem' }} />
               Código
             </Button>
           </Box>
-          <Button variant="primary" size="small" onClick={() => window.open(liveUrl, '_blank')}>
+          <Button variant="primary" size="small" onClick={() => window.open(linkDeploy, '_blank')}>
             <LaunchIcon sx={{ mr: 1, fontSize: '1rem' }} />
             Demo
           </Button>
