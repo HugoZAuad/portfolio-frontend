@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import {
   Card,
   CardContent,
@@ -8,27 +8,27 @@ import {
   Box,
   useTheme,
   CardMedia,
-} from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LaunchIcon from '@mui/icons-material/Launch';
-import Button from '../../Common/Button/Button';
-import { motion } from 'framer-motion';
+} from "@mui/material"
+import GitHubIcon from "@mui/icons-material/GitHub"
+import LaunchIcon from "@mui/icons-material/Launch"
+import Button from "../../Common/Button/Button"
+import { motion } from "framer-motion"
 
 interface ProjectProps {
-  title: string;
-  description: string;
-  technologies?: string[];
-  linkRepo: string;
-  linkDeploy: string;
-  imageUrl?: string;
-  type: 'Frontend' | 'Backend' | 'Fullstack';
-  index: number;
+  title: string
+  description: string
+  technologies?: string[]
+  linkRepo: string
+  linkDeploy: string
+  imageUrl?: string
+  type: "Frontend" | "Backend" | "Fullstack"
+  index: number
 }
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
-};
+}
 
 const ProjectCard: React.FC<ProjectProps> = ({
   title,
@@ -40,14 +40,14 @@ const ProjectCard: React.FC<ProjectProps> = ({
   type,
   index,
 }) => {
-  const theme = useTheme();
+  const theme = useTheme()
 
   const typeColor =
-    type === 'Frontend'
-      ? 'primary'
-      : type === 'Backend'
-      ? 'secondary'
-      : 'success';
+    type === "Frontend"
+      ? "primary"
+      : type === "Backend"
+      ? "secondary"
+      : "success"
 
   return (
     <motion.div
@@ -58,12 +58,12 @@ const ProjectCard: React.FC<ProjectProps> = ({
     >
       <Card
         sx={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-          '&:hover': {
-            transform: 'translateY(-8px)',
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          "&:hover": {
+            transform: "translateY(-8px)",
             boxShadow: `0 20px 40px ${theme.palette.primary.main}15`,
           },
         }}
@@ -86,10 +86,13 @@ const ProjectCard: React.FC<ProjectProps> = ({
             size="small"
             sx={{ mb: 2, fontWeight: 500 }}
           />
-          <Typography variant="body2" sx={{ mb: 3, color: theme.palette.text.secondary }}>
+          <Typography
+            variant="body2"
+            sx={{ mb: 3, color: theme.palette.text.secondary }}
+          >
             {description}
           </Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}>
             {technologies.map((tech, i) => (
               <Chip
                 key={i}
@@ -106,19 +109,27 @@ const ProjectCard: React.FC<ProjectProps> = ({
         </CardContent>
         <CardActions sx={{ p: 2, pt: 0 }}>
           <Box sx={{ mr: 1 }}>
-            <Button variant="secondary" size="small" onClick={() => window.open(linkRepo, '_blank')}>
-              <GitHubIcon sx={{ mr: 1, fontSize: '1rem' }} />
+            <Button
+              variant="secondary"
+              size="small"
+              onClick={() => window.open(linkRepo, "_blank")}
+            >
+              <GitHubIcon sx={{ mr: 1, fontSize: "1rem" }} />
               Código
             </Button>
           </Box>
-          <Button variant="primary" size="small" onClick={() => window.open(linkDeploy, '_blank')}>
-            <LaunchIcon sx={{ mr: 1, fontSize: '1rem' }} />
+          <Button
+            variant="primary"
+            size="small"
+            onClick={() => window.open(linkDeploy, "_blank")}
+          >
+            <LaunchIcon sx={{ mr: 1, fontSize: "1rem" }} />
             Demo
           </Button>
         </CardActions>
       </Card>
     </motion.div>
-  );
-};
+  )
+}
 
-export default ProjectCard;
+export default ProjectCard
