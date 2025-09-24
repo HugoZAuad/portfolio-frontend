@@ -41,33 +41,26 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleImageUpload = async (): Promise<string> => {
-    if (!imageFile) return form.imageUrl || '';
-    const formData = new FormData();
-    formData.append('image', imageFile);
-
-    const response = await fetch('https://portfolio-backend-dqxo.onrender.com/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await response.json();
-    return data.imageUrl;
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const uploadedImageUrl = await handleImageUpload();
-    onSubmit({ ...form, imageUrl: uploadedImageUrl }, imageFile);
-    setForm({
-      title: '',
-      description: '',
-      linkRepo: '',
-      linkDeploy: '',
-      imageUrl: '',
-      type: 'Fullstack',
-    });
-    setImageFile(undefined);
+    
+    try {
+      await onSubmit({ ...form }, imageFile);
+      
+      // Reset do formulário após sucesso
+      setForm({
+        title: '',
+        description: '',
+        linkRepo: '',
+        linkDeploy: '',
+        imageUrl: '',
+        type: 'Fullstack',
+      });
+      setImageFile(undefined);
+    } catch (error) {
+      console.error('Erro ao criar projeto:', error);
+      // Adicione tratamento de erro visual aqui se necessário
+    }
   };
 
   return (
@@ -78,6 +71,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
           value={form.title}
           onChange={(e) => handleChange('title', e.target.value)}
           fullWidth
+          required
         />
         <TextField
           label="Descrição"
@@ -86,6 +80,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
           multiline
           rows={3}
           fullWidth
+          required
         />
         <TextField
           label="Link do Repositório"
@@ -99,7 +94,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
           onChange={(e) => handleChange('linkDeploy', e.target.value)}
           fullWidth
         />
-        <FormControl fullWidth>
+        <FormControl fullWidth required>
           <InputLabel>Tipo do Projeto</InputLabel>
           <Select
             value={form.type}
@@ -113,7 +108,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
             ))}
           </Select>
         </FormControl>
-        <Button variant="outlined" component="label">
+        <Button variant="outlined" component="label" fullWidth>
           Selecionar Imagem
           <input
             type="file"
@@ -127,7 +122,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
           />
         </Button>
         {imageFile && <span>{imageFile.name}</span>}
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" fullWidth>
           {initialData ? 'Atualizar Projeto' : 'Criar Projeto'}
         </Button>
       </Stack>

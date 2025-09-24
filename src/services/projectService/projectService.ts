@@ -28,10 +28,11 @@ export const createProject = async (
   formData.append('title', project.title);
   formData.append('description', project.description);
   formData.append('type', project.type);
-  formData.append('linkRepo', project.linkRepo || '');
-  formData.append('linkDeploy', project.linkDeploy || '');
-  formData.append('imageUrl', project.imageUrl || '');
+  
+  if (project.linkRepo) formData.append('linkRepo', project.linkRepo);
+  if (project.linkDeploy) formData.append('linkDeploy', project.linkDeploy);
 
+  
   if (imageFile) {
     formData.append('image', imageFile);
   }
