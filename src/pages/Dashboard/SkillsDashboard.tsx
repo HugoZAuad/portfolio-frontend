@@ -4,21 +4,17 @@ import SectionHeader from '../../components/Components_Dashboard/SectionHeader/S
 import SkillForm from '../../components/Components_Dashboard/SkillForm/SkillForm';
 import SkillTable from '../../components/Components_Dashboard/SkillTable/SkillTable';
 import FeedbackAlert from '../../components/Common/FeedbackAlert/FeedbackAlert';
-import {
-  getSkills,
-  createSkill,
-  updateSkill,
-  deleteSkill,
-} from '../../services/skillService/skillService';
+import { useSkillService } from '../../services/skillService/skillService';
 import type { Skill } from '../../services/skillService/skillsService.types';
 
 const SkillsDashboard: React.FC = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [editingSkill, setEditingSkill] = useState<Skill | undefined>(undefined);
-
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [feedbackSeverity, setFeedbackSeverity] = useState<'success' | 'error'>('success');
+
+  const { getSkills, createSkill, updateSkill, deleteSkill } = useSkillService();
 
   const showFeedback = (message: string, severity: 'success' | 'error') => {
     setFeedbackMessage(message);
@@ -26,21 +22,21 @@ const SkillsDashboard: React.FC = () => {
     setFeedbackOpen(true);
   };
 
-  const loadSkills = useCallback(async (): Promise<void> => {
+  const loadSkills = useCallback(async () => {
     try {
       const response = await getSkills();
       setSkills(response);
     } catch (error) {
-      console.error('Erro ao carregar habilidades:', error);
+      console.error(error);
       showFeedback('Erro ao carregar habilidades.', 'error');
     }
-  }, []);
+  }, [getSkills]);
 
   useEffect(() => {
     loadSkills();
   }, [loadSkills]);
 
-  const handleCreateOrUpdate = async (skill: Skill, imageFile?: File): Promise<void> => {
+  const handleCreateOrUpdate = async (skill: Skill, imageFile?: File) => {
     try {
       if (editingSkill && editingSkill._id) {
         await updateSkill(editingSkill._id, skill);
@@ -52,22 +48,22 @@ const SkillsDashboard: React.FC = () => {
       setEditingSkill(undefined);
       await loadSkills();
     } catch (error) {
-      console.error('Erro ao salvar habilidade:', error);
+      console.error(error);
       showFeedback('Erro ao salvar habilidade.', 'error');
     }
   };
 
-  const handleEdit = (skill: Skill): void => {
+  const handleEdit = (skill: Skill) => {
     setEditingSkill(skill);
   };
 
-  const handleDelete = async (id: string): Promise<void> => {
+  const handleDelete = async (id: string) => {
     try {
       await deleteSkill(id);
       showFeedback('Habilidade excluída com sucesso!', 'success');
       await loadSkills();
     } catch (error) {
-      console.error('Erro ao excluir habilidade:', error);
+      console.error(error);
       showFeedback('Erro ao excluir habilidade.', 'error');
     }
   };
