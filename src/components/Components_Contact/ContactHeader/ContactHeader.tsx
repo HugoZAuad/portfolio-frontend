@@ -23,13 +23,13 @@ const ContactHeader: React.FC = () => {
         sx={{
           color: theme.palette.text.secondary,
           fontWeight: 400,
-          maxWidth: '600px',
+          maxWidth: '800px',
           mx: 'auto',
           lineHeight: 1.6,
         }}
       >
         Estou sempre interessado em novas oportunidades e projetos interessantes.
-        Vamos discutir como podemos trabalhar juntos!
+        Vamos conversar como podemos trabalhar juntos!
       </Typography>
     </Box>
   );

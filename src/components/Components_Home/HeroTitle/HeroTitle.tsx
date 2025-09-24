@@ -16,7 +16,7 @@ const HeroTitle: React.FC = () => {
         lineHeight: 1.1,
       }}
     >
-      Olá, eu sou{' '}
+      Olá, eu sou o {' '}
       <Box
         component="span"
         sx={{

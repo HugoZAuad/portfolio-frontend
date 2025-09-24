@@ -74,7 +74,7 @@ const ContactForm: React.FC = () => {
           label="Mensagem"
           name="message"
           multiline
-          rows={6}
+          rows={3}
           value={formData.message}
           onChange={handleChange}
           margin="normal"
