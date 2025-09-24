@@ -1,4 +1,0 @@
-- [x] Add @import "tailwindcss"; to src/index.css
-- [x] Create tailwind.config.js
-- [ ] Run npm run dev to verify setup
-- [ ] Test Tailwind classes in a component
