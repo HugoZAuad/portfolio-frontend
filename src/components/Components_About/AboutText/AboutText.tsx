@@ -36,6 +36,7 @@ const AboutText: React.FC = () => {
           color: theme.palette.text.secondary,
           lineHeight: 1.8,
           fontSize: "1.1rem",
+          textAlign: 'justify'
         }}
       >
         Sou um desenvolvedor movido por transformar ideias em
@@ -50,6 +51,7 @@ const AboutText: React.FC = () => {
           color: theme.palette.text.secondary,
           lineHeight: 1.8,
           fontSize: "1.1rem",
+          textAlign: 'justify'
         }}
       >
         Minha abordagem junta criatividade e precisão técnica, com atenção

@@ -9,8 +9,11 @@ import type { Project } from '../../services/projectService/projectService';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
-  padding: '120px 20px 80px',
+  padding: '80px 20px 60px',
   backgroundColor: theme.palette.background.default,
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
 }));
 
 const ProjectsSection: React.FC = () => {

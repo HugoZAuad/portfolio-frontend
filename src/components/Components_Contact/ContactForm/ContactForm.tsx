@@ -1,25 +1,62 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, useTheme } from '@mui/material';
+import { Box, Typography, TextField, useTheme, Alert } from '@mui/material';
 import Button from '../../Common/Button/Button';
 
 const ContactForm: React.FC = () => {
   const theme = useTheme();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [isSending, setIsSending] = useState(false);
+  const [feedback, setFeedback] = useState<'success' | 'error' | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const isEmailValid = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const isFormValid =
+    formData.name.trim() !== '' &&
+    isEmailValid(formData.email) &&
+    formData.message.trim() !== '';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    if (!isFormValid) return;
+
+    setIsSending(true);
+    setFeedback(null);
+
+    try {
+      const response = await fetch('https://portfolio-backend-dqxo.onrender.com/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFeedback('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setFeedback('error');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar mensagem:', error);
+      setFeedback('error');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -87,9 +124,25 @@ const ContactForm: React.FC = () => {
           }}
         />
 
-        <Button variant="primary" size="large">
-          Enviar Mensagem
+        <Button
+          variant="primary"
+          size="large"
+          type="submit"
+          disabled={!isFormValid || isSending}
+        >
+          {isSending ? 'Enviando...' : 'Enviar Mensagem'}
         </Button>
+
+        {feedback === 'success' && (
+          <Alert severity="success" sx={{ mt: 3 }}>
+            Mensagem enviada com sucesso!
+          </Alert>
+        )}
+        {feedback === 'error' && (
+          <Alert severity="error" sx={{ mt: 3 }}>
+            Ocorreu um erro ao enviar. Tente novamente.
+          </Alert>
+        )}
       </Box>
     </>
   );

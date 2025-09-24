@@ -25,6 +25,7 @@ const SectionHeader: React.FC = () => {
           maxWidth: '600px',
           mx: 'auto',
           lineHeight: 1.6,
+          textAlign: 'justify'
         }}
       >
         Tecnologias e ferramentas que domino para criar soluções inovadoras

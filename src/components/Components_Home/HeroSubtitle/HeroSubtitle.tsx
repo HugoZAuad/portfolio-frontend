@@ -13,6 +13,7 @@ const HeroSubtitle: React.FC = () => {
         fontWeight: 400,
         fontSize: { xs: '0.85rem', md: '1rem', lg: '1.75rem' },
         lineHeight: 1.4,
+        textAlign: 'justify'
       }}
     >
       Desenvolvedor Full-Stack dedicado a criar experiências digitais envolventes e soluções que fazem a diferença.

@@ -8,10 +8,10 @@ import type { Skill } from '../../services/skillService/skillService';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
-  padding: '120px 20px 80px',
+  padding: '80px 20px 60px',
   backgroundColor: theme.palette.background.default,
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   justifyContent: 'center',
 }));
 

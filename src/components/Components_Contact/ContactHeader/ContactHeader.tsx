@@ -23,9 +23,10 @@ const ContactHeader: React.FC = () => {
         sx={{
           color: theme.palette.text.secondary,
           fontWeight: 400,
-          maxWidth: '800px',
+          maxWidth: '1000px',
           mx: 'auto',
-          lineHeight: 1.6,
+          lineHeight: 1,
+          textAlign: 'justify'
         }}
       >
         Estou sempre interessado em novas oportunidades e projetos interessantes.
