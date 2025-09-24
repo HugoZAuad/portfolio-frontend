@@ -1,4 +1,4 @@
-import api from '../api/api';
+import { useApi } from '../../contexts/ApiContext';
 import type {
   Project,
   ProjectResponse,
@@ -6,54 +6,56 @@ import type {
   PaginatedProjectsResponse,
 } from './projectService.types';
 
-export const getProjects = async (
-  page: number,
-  limit: number = 6
-): Promise<PaginatedProjectsResponse> => {
-  const response = await api.get<PaginatedProjectsResponse>(`/projects?page=${page}&limit=${limit}`);
-  return response.data;
-};
+export const useProjectService = () => {
+  const api = useApi();
 
-export const getAllProjects = async (): Promise<Project[]> => {
-  const response = await api.get<Project[]>('/projects');
-  return response.data;
-};
+  const getProjects = async (
+    page: number,
+    limit: number = 6
+  ): Promise<PaginatedProjectsResponse> => {
+    const response = await api.get(`/projects?page=${page}&limit=${limit}`);
+    return response.data;
+  };
 
-export const createProject = async (
-  project: Project,
-  imageFile?: File
-): Promise<ProjectResponse> => {
-  const formData = new FormData();
+  const getAllProjects = async (): Promise<Project[]> => {
+    const response = await api.get('/projects');
+    return response.data;
+  };
 
-  formData.append('title', project.title);
-  formData.append('description', project.description);
-  formData.append('type', project.type);
+  const createProject = async (
+    project: Project,
+    imageFile?: File
+  ): Promise<ProjectResponse> => {
+    const formData = new FormData();
+    formData.append('title', project.title);
+    formData.append('description', project.description);
+    formData.append('type', project.type);
+    if (project.linkRepo) formData.append('linkRepo', project.linkRepo);
+    if (project.linkDeploy) formData.append('linkDeploy', project.linkDeploy);
+    if (imageFile) formData.append('image', imageFile);
 
-  if (project.linkRepo) formData.append('linkRepo', project.linkRepo);
-  if (project.linkDeploy) formData.append('linkDeploy', project.linkDeploy);
-  if (imageFile) formData.append('image', imageFile);
+    const response = await api.post('/projects', formData);
+    return response.data;
+  };
 
-  const token = localStorage.getItem('token');
+  const updateProject = async (
+    id: string,
+    project: Project
+  ): Promise<ProjectResponse> => {
+    const response = await api.patch(`/projects/${id}`, project);
+    return response.data;
+  };
 
-  const response = await api.post<ProjectResponse>('/projects', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const deleteProject = async (id: string): Promise<DeleteResponse> => {
+    const response = await api.delete(`/projects/${id}`);
+    return response.data;
+  };
 
-  return response.data;
-};
-
-export const updateProject = async (
-  id: string,
-  project: Project
-): Promise<ProjectResponse> => {
-  const response = await api.patch<ProjectResponse>(`/projects/${id}`, project);
-  return response.data;
-};
-
-export const deleteProject = async (id: string): Promise<DeleteResponse> => {
-  const response = await api.delete<DeleteResponse>(`/projects/${id}`);
-  return response.data;
+  return {
+    getProjects,
+    getAllProjects,
+    createProject,
+    updateProject,
+    deleteProject,
+  };
 };

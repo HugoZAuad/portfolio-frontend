@@ -1,39 +1,41 @@
-import api from '../api/api';
+import { useApi } from '../../contexts/ApiContext';
 import type { Skill, SkillResponse, DeleteResponse } from './skillsService.types';
 
-export const getSkills = async (): Promise<Skill[]> => {
-  const response = await api.get<Skill[]>('/skills');
-  return response.data;
-};
+export const useSkillService = () => {
+  const api = useApi();
 
-export const createSkill = async (
-  skill: Skill,
-  imageFile?: File
-): Promise<SkillResponse> => {
-  const formData = new FormData();
+  const getSkills = async (): Promise<Skill[]> => {
+    const response = await api.get('/skills');
+    return response.data;
+  };
 
-  formData.append('name', skill.name);
-  formData.append('level', String(skill.level));
+  const createSkill = async (
+    skill: Skill,
+    imageFile?: File
+  ): Promise<SkillResponse> => {
+    const formData = new FormData();
+    formData.append('name', skill.name);
+    formData.append('level', String(skill.level));
+    if (imageFile) formData.append('image', imageFile);
 
-  if (imageFile) {
-    formData.append('image', imageFile); 
-  }
+    const response = await api.post('/skills', formData);
+    return response.data;
+  };
 
-  const response = await api.post<SkillResponse>('/skills', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  const updateSkill = async (id: string, skill: Skill): Promise<Skill> => {
+    const response = await api.patch(`/skills/${id}`, skill);
+    return response.data;
+  };
 
-  return response.data;
-};
+  const deleteSkill = async (id: string): Promise<DeleteResponse> => {
+    const response = await api.delete(`/skills/${id}`);
+    return response.data;
+  };
 
-export const updateSkill = async (id: string, skill: Skill): Promise<Skill> => {
-  const response = await api.patch<Skill>(`/skills/${id}`, skill);
-  return response.data;
-};
-
-export const deleteSkill = async (id: string): Promise<DeleteResponse> => {
-  const response = await api.delete<DeleteResponse>(`/skills/${id}`);
-  return response.data;
+  return {
+    getSkills,
+    createSkill,
+    updateSkill,
+    deleteSkill,
+  };
 };
