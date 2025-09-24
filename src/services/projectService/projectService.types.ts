@@ -9,3 +9,20 @@ export interface Project {
   imageUrl?: string;
   type: ProjectType;
 }
+
+export interface ProjectResponse {
+  message: string;
+  project: Project;
+}
+
+export interface DeleteResponse {
+  message: string;
+}
+
+export interface PaginatedProjectsResponse {
+  projects: Project[];
+  total: number;
+  page: number;
+  limit: number;
+  hasMore: boolean;
+}

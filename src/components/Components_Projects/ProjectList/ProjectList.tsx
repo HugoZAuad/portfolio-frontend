@@ -18,7 +18,7 @@ const ProjectList: React.FC<Props> = ({ projects }) => {
     <Grid container spacing={4}>
       {projects.map((project, index) => (
         <Grid size={{ xs: 12, md: 6 }} key={index}>
-          <ProjectCard {...project} index={index} />
+          <ProjectCard linkRepo={''} linkDeploy={''} type={'Frontend'} {...project} index={index} />
         </Grid>
       ))}
     </Grid>

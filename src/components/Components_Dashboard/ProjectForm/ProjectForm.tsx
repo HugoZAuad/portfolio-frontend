@@ -9,14 +9,14 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import type { Project } from '../../../services/projectService/projectService.types';
+import type { Project, ProjectType } from '../../../services/projectService/projectService.types';
 
 interface Props {
   onSubmit: (project: Project, imageFile?: File) => void;
   initialData?: Project;
 }
 
-const projectTypes = ['Frontend', 'Backend', 'Fullstack'] as const;
+const projectTypes: ProjectType[] = ['Frontend', 'Backend', 'Fullstack'];
 
 const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   const [form, setForm] = useState<Project>({

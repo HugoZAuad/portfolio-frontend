@@ -27,12 +27,13 @@ export const createProject = async (
 
   formData.append('title', project.title);
   formData.append('description', project.description);
-  formData.append('githubUrl', project.githubUrl);
-  formData.append('liveUrl', project.liveUrl);
+  formData.append('type', project.type);
+  formData.append('linkRepo', project.linkRepo || '');
+  formData.append('linkDeploy', project.linkDeploy || '');
   formData.append('imageUrl', project.imageUrl || '');
 
   if (imageFile) {
-    formData.append('image', imageFile); 
+    formData.append('image', imageFile);
   }
 
   const response = await api.post<ProjectResponse>('/projects', formData, {
