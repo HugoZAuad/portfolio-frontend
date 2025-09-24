@@ -7,7 +7,7 @@ const AboutAvatar: React.FC = () => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Avatar
-        src="../../../../public/avatar.png" 
+        src="/avatar.png" 
         alt="Avatar"
         sx={{
           width: { xs: 200, md: 300 },
