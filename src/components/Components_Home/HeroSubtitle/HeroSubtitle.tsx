@@ -11,12 +11,11 @@ const HeroSubtitle: React.FC = () => {
         mb: 6,
         color: theme.palette.text.secondary,
         fontWeight: 400,
-        fontSize: { xs: '1.25rem', md: '1.5rem', lg: '1.75rem' },
+        fontSize: { xs: '0.25rem', md: '0.5rem', lg: '1.75rem' },
         lineHeight: 1.4,
       }}
     >
-      Desenvolvedor Full-Stack apaixonado por criar experiências digitais
-      incríveis e soluções inovadoras.
+      Desenvolvedor Full-Stack dedicado a criar experiências digitais envolventes e soluções que fazem a diferença.
     </Typography>
   );
 };
