@@ -1,12 +1,28 @@
 import axios from 'axios';
 
 export type Skill = {
+  _id?: string;
   name: string;
   level: number;
-  category: string;
 };
 
-export const fetchSkills = async (): Promise<Skill[]> => {
-  const response = await axios.get('https://portfolio-backend-dqxo.onrender.com/skills');
+const BASE_URL = 'https://portfolio-backend-dqxo.onrender.com/skills';
+
+export const getSkills = async (): Promise<Skill[]> => {
+  const response = await axios.get<Skill[]>(BASE_URL);
   return response.data;
+};
+
+export const createSkill = async (skill: Skill): Promise<Skill> => {
+  const response = await axios.post<Skill>(BASE_URL, skill);
+  return response.data;
+};
+
+export const updateSkill = async (id: string, skill: Skill): Promise<Skill> => {
+  const response = await axios.put<Skill>(`${BASE_URL}/${id}`, skill);
+  return response.data;
+};
+
+export const deleteSkill = async (id: string): Promise<void> => {
+  await axios.delete(`${BASE_URL}/${id}`);
 };

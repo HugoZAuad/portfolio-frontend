@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Box, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SectionHeader from '../../components/Components_Skills/SectionHeader/SectionHeader';
-import SkillCategory from '../../components/Components_Skills/SkillCategory/SkillCategory';
-import { fetchSkills } from '../../services/skillService/skillService';
+import SkillList from '../../components/Components_Skills/SkillList/SkillList';
+import { getSkills } from '../../services/skillService/skillService';
 import type { Skill } from '../../services/skillService/skillService';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
@@ -14,16 +14,12 @@ const SectionContainer = styled(Box)(({ theme }) => ({
 
 const SkillsSection: React.FC = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const loadSkills = async () => {
       try {
-        const data: Skill[] = await fetchSkills();
+        const data: Skill[] = await getSkills();
         setSkills(data);
-
-        const uniqueCategories = Array.from(new Set(data.map((s) => s.category)));
-        setCategories(uniqueCategories);
       } catch (error) {
         console.error('Erro ao carregar habilidades:', error);
       }
@@ -37,14 +33,9 @@ const SkillsSection: React.FC = () => {
       <Container maxWidth="lg">
         <SectionHeader />
         <Grid container spacing={4}>
-          {categories.map((category, index) => {
-            const filteredSkills = skills.filter((s) => s.category === category);
-            return (
-              <Grid size={{ xs: 12, md: 6 }} key={index}>
-                <SkillCategory title={category} skills={filteredSkills} />
-              </Grid>
-            );
-          })}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <SkillList title="Minhas Habilidades" skills={skills} />
+          </Grid>
         </Grid>
       </Container>
     </SectionContainer>
