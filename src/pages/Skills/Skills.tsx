@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Container, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SectionHeader from '../../components/Components_Skills/SectionHeader/SectionHeader';
 import SkillList from '../../components/Components_Skills/SkillList/SkillList';
-import { getSkills } from '../../services/skillService/skillService';
+import FeedbackAlert from '../../components/Common/FeedbackAlert/FeedbackAlert';
+import { useSkillService } from '../../services/skillService/skillService';
 import type { Skill } from '../../services/skillService/skillsService.types';
 
 const SectionContainer = styled(Box)(({ theme }) => ({
@@ -17,19 +18,31 @@ const SectionContainer = styled(Box)(({ theme }) => ({
 
 const SkillsSection: React.FC = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [feedbackSeverity, setFeedbackSeverity] = useState<'success' | 'error'>('error');
+
+  const { getSkills } = useSkillService();
+
+  const showFeedback = (message: string, severity: 'success' | 'error') => {
+    setFeedbackMessage(message);
+    setFeedbackSeverity(severity);
+    setFeedbackOpen(true);
+  };
+
+  const loadSkills = useCallback(async () => {
+    try {
+      const data = await getSkills();
+      setSkills(data);
+    } catch (error) {
+      console.error(error);
+      showFeedback('Erro ao carregar habilidades.', 'error');
+    }
+  }, [getSkills]);
 
   useEffect(() => {
-    const loadSkills = async () => {
-      try {
-        const data: Skill[] = await getSkills();
-        setSkills(data);
-      } catch (error) {
-        console.error('Erro ao carregar habilidades:', error);
-      }
-    };
-
     loadSkills();
-  }, []);
+  }, [loadSkills]);
 
   return (
     <SectionContainer id="skills">
@@ -38,6 +51,12 @@ const SkillsSection: React.FC = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <SkillList title="Minhas Habilidades" skills={skills} />
         </Box>
+        <FeedbackAlert
+          open={feedbackOpen}
+          message={feedbackMessage}
+          severity={feedbackSeverity}
+          onClose={() => setFeedbackOpen(false)}
+        />
       </Container>
     </SectionContainer>
   );
