@@ -20,7 +20,7 @@ const ProjectsDashboard: React.FC = () => {
   const loadProjects = useCallback(async (): Promise<void> => {
     try {
       const response: PaginatedProjectsResponse = await getProjects(page, limit);
-      setProjects(response.projects); // ✅ extrai corretamente os projetos
+      setProjects(response.projects);
     } catch (error) {
       console.error('Erro ao carregar projetos:', error);
     }

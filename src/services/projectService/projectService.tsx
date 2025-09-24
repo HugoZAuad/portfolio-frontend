@@ -14,6 +14,7 @@ export type PaginatedProjectsResponse = {
   total: number
   page: number
   limit: number
+  hasMore: boolean;
 }
 
 const BASE_URL = "https://portfolio-backend-dqxo.onrender.com/projects"
