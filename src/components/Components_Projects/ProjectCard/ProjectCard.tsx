@@ -21,7 +21,7 @@ interface ProjectProps {
   linkRepo: string
   linkDeploy: string
   imageUrl?: string
-  type: "Frontend" | "Backend" | "Fullstack"
+  type: "frontend" | "backend" | "fullstack"
   index: number
 }
 
@@ -43,9 +43,9 @@ const ProjectCard: React.FC<ProjectProps> = ({
   const theme = useTheme()
 
   const typeColor =
-    type === "Frontend"
+    type === "frontend"
       ? "primary"
-      : type === "Backend"
+      : type === "backend"
       ? "secondary"
       : "success"
 

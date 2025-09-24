@@ -7,6 +7,7 @@ export interface Project {
   linkRepo?: string;
   linkDeploy?: string;
   imageUrl?: string;
+  images?: { url: string }[];
   type: ProjectType;
 }
 

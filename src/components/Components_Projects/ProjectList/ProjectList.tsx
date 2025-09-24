@@ -18,7 +18,7 @@ const ProjectList: React.FC<Props> = ({ projects }) => {
             description={project.description}
             linkRepo={project.linkRepo || ''}
             linkDeploy={project.linkDeploy || ''}
-            imageUrl={project.imageUrl}
+            imageUrl={project.imageUrl || project.images?.[0]?.url}
             type={project.type}
             technologies={[]}
           />
