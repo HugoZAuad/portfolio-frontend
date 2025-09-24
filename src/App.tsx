@@ -20,6 +20,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import ProjectsDashboard from './pages/Dashboard/ProjectsDashboard';
 import SkillsDashboard from './pages/Dashboard/SkillsDashboard';
 import ProtectedRoute from './routes/ProtectedRoute/ProtectedRoute';
+import Footer from './components/Common/Footer/Footer'
 
 const ThemeWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme } = useTheme();
@@ -105,6 +106,7 @@ const App: React.FC = () => {
                       <div id="projects"><ProjectsSection /></div>
                       <div id="skills"><SkillsSection /></div>
                       <div id="contact"><ContactSection /></div>
+                      <Footer />
                     </PublicLayout>
                   }
                 />

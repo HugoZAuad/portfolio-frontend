@@ -22,6 +22,28 @@ body {
   background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
 }
 
+/* Scrollbar personalizada para WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0f23;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6366f1;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Scrollbar para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6366f1 #0f0f23;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

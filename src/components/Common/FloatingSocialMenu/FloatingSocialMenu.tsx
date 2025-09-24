@@ -1,66 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { Box, IconButton, Zoom } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import PublicIcon from '@mui/icons-material/Public';
-import CloseIcon from '@mui/icons-material/Close';
+import React, { useState, useEffect } from "react"
+import { Box, IconButton, Zoom } from "@mui/material"
+import GitHubIcon from "@mui/icons-material/GitHub"
+import LinkedInIcon from "@mui/icons-material/LinkedIn"
+import PublicIcon from "@mui/icons-material/Public"
+import CloseIcon from "@mui/icons-material/Close"
 
 const FloatingSocialMenu: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  const toggleMenu = () => setOpen((prev) => !prev);
+  const toggleMenu = () => setOpen((prev) => !prev)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 300);
-    };
+      setScrolled(window.scrollY > 300)
+    }
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
-  const baseSize = 40;
+  const baseSize = 40
 
   const buttonStyle = {
     width: baseSize,
     height: baseSize,
-    borderRadius: '50%',
-    backgroundColor: '#fff',
+    borderRadius: "50%",
+    backgroundColor: "#fff",
     boxShadow: 2,
-    color: '#000',
-    transition: 'all 0.3s ease',
-    '&:hover': {
-      backgroundColor: '#e0e0e0',
+    color: "#000",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      backgroundColor: "#e0e0e0",
     },
-  };
+  }
 
   return (
     <Box
       sx={{
-        position: 'fixed',
-        bottom: scrolled ? 80 : 30, // sobe junto com ScrollToTopButton
-        left: 1855, // ⬅️ alinhado ao lado do botão de subir
+        position: "fixed",
+        bottom: scrolled ? 80 : 60, // ⬅️ acima do botão de scroll
+        right: 10, // ⬅️ igual ao ScrollToTopButton
         zIndex: 1300,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         gap: 1,
-        transition: 'bottom 0.3s ease',
+        transition: "bottom 0.3s ease",
       }}
     >
-      {/* Social buttons row */}
       <Zoom in={open}>
-        <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column' }}>
+        <Box sx={{ display: "flex", gap: 1, flexDirection: "column" }}>
           <IconButton
             href="https://github.com/hugozauad"
             target="_blank"
             sx={{
               ...buttonStyle,
-              backgroundColor: '#000',
-              color: '#fff',
-              '&:hover': {
-                backgroundColor: '#222',
+              backgroundColor: "#000",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#222",
               },
             }}
           >
@@ -72,10 +71,10 @@ const FloatingSocialMenu: React.FC = () => {
             target="_blank"
             sx={{
               ...buttonStyle,
-              backgroundColor: '#0A66C2',
-              color: '#fff',
-              '&:hover': {
-                backgroundColor: '#084a9e',
+              backgroundColor: "#0A66C2",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#084a9e",
               },
             }}
           >
@@ -84,12 +83,15 @@ const FloatingSocialMenu: React.FC = () => {
         </Box>
       </Zoom>
 
-      {/* Toggle button */}
       <IconButton onClick={toggleMenu} sx={buttonStyle}>
-        {open ? <CloseIcon fontSize="small" /> : <PublicIcon fontSize="small" />}
+        {open ? (
+          <CloseIcon fontSize="small" />
+        ) : (
+          <PublicIcon fontSize="small" />
+        )}
       </IconButton>
     </Box>
-  );
-};
+  )
+}
 
-export default FloatingSocialMenu;
+export default FloatingSocialMenu
