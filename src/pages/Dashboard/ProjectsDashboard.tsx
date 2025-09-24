@@ -30,12 +30,12 @@ const ProjectsDashboard: React.FC = () => {
     loadProjects();
   }, [loadProjects]);
 
-  const handleCreateOrUpdate = async (project: Project): Promise<void> => {
+  const handleCreateOrUpdate = async (project: Project, imageFile?: File): Promise<void> => {
     try {
       if (editingProject && editingProject._id) {
         await updateProject(editingProject._id, project);
       } else {
-        await createProject(project);
+        await createProject(project, imageFile); 
       }
       setEditingProject(undefined);
       await loadProjects();

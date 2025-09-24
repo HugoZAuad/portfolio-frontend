@@ -6,8 +6,25 @@ export const getSkills = async (): Promise<Skill[]> => {
   return response.data;
 };
 
-export const createSkill = async (skill: Skill): Promise<SkillResponse> => {
-  const response = await api.post<SkillResponse>('/skills', skill);
+export const createSkill = async (
+  skill: Skill,
+  imageFile?: File
+): Promise<SkillResponse> => {
+  const formData = new FormData();
+
+  formData.append('name', skill.name);
+  formData.append('level', String(skill.level));
+
+  if (imageFile) {
+    formData.append('image', imageFile); 
+  }
+
+  const response = await api.post<SkillResponse>('/skills', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
   return response.data;
 };
 

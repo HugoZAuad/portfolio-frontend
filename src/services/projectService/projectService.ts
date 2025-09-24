@@ -19,12 +19,35 @@ export const getAllProjects = async (): Promise<Project[]> => {
   return response.data;
 };
 
-export const createProject = async (project: Project): Promise<ProjectResponse> => {
-  const response = await api.post<ProjectResponse>('/projects', project);
+export const createProject = async (
+  project: Project,
+  imageFile?: File
+): Promise<ProjectResponse> => {
+  const formData = new FormData();
+
+  formData.append('title', project.title);
+  formData.append('description', project.description);
+  formData.append('githubUrl', project.githubUrl);
+  formData.append('liveUrl', project.liveUrl);
+  formData.append('imageUrl', project.imageUrl || '');
+
+  if (imageFile) {
+    formData.append('image', imageFile); 
+  }
+
+  const response = await api.post<ProjectResponse>('/projects', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
   return response.data;
 };
 
-export const updateProject = async (id: string, project: Project): Promise<ProjectResponse> => {
+export const updateProject = async (
+  id: string,
+  project: Project
+): Promise<ProjectResponse> => {
   const response = await api.patch<ProjectResponse>(`/projects/${id}`, project);
   return response.data;
 };
@@ -32,21 +55,4 @@ export const updateProject = async (id: string, project: Project): Promise<Proje
 export const deleteProject = async (id: string): Promise<DeleteResponse> => {
   const response = await api.delete<DeleteResponse>(`/projects/${id}`);
   return response.data;
-};
-
-export const uploadImage = async (file: File): Promise<string> => {
-  const formData = new FormData();
-  formData.append('image', file);
-
-  const response = await api.post<{ imageUrl: string }>(
-    '/upload',
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
-
-  return response.data.imageUrl;
 };
