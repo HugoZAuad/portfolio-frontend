@@ -39,7 +39,7 @@ const SkillsDashboard: React.FC = () => {
   const handleCreateSkill = async (skillData: Skill) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id: id, ...dataToSave } = skillData; 
+      const { id, ...dataToSave } = skillData;
       
       await createSkill(dataToSave as SkillUpdateData);
       
@@ -57,7 +57,7 @@ const SkillsDashboard: React.FC = () => {
     
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id: id, ...dataToSave } = skillData;
+      const { id, ...dataToSave } = skillData;
       
       await updateSkill(editingSkill.id, dataToSave as SkillUpdateData);
       
@@ -100,7 +100,11 @@ const SkillsDashboard: React.FC = () => {
         onSubmit={handleSubmit} 
         initialData={editingSkill} 
       />
-      <SkillTable skills={skills} onEdit={handleEdit} onDelete={handleDelete} />
+      <SkillTable 
+        skills={skills} 
+        onEdit={handleEdit} 
+        onDelete={handleDelete} 
+      />
       <FeedbackAlert
         open={feedbackOpen}
         message={feedbackMessage}

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Container, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SectionHeader from '../../components/Components_Skills/SectionHeader/SectionHeader';
-import SkillList from '../../components/Components_Skills/SkillList/SkillList';
+import SkillsList from '../../components/Components_Skills/SkillList/SkillList';
 import FeedbackAlert from '../../components/Common/FeedbackAlert/FeedbackAlert';
 import { useSkillService } from '../../services/skillService/skillService';
 import type { Skill } from '../../services/skillService/skillsService.types';
@@ -49,7 +49,7 @@ const SkillsSection: React.FC = () => {
       <Container maxWidth="md">
         <SectionHeader />
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <SkillList title="Minhas Habilidades" skills={skills} />
+          <SkillsList skills={skills} />
         </Box>
         <FeedbackAlert
           open={feedbackOpen}
