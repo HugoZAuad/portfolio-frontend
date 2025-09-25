@@ -27,7 +27,7 @@ const ProjectsDashboard: React.FC = () => {
   const loadProjects = useCallback(async () => {
     try {
       const response = await getProjects(page, limit);
-      setProjects(response.projects);
+      setProjects(response.projects || []); 
     } catch (error) {
       console.error(error);
       showFeedback('Erro ao carregar projetos.', 'error');
@@ -44,13 +44,17 @@ const ProjectsDashboard: React.FC = () => {
     try {
       if (projectData._id) {
         result = await updateProject(projectData._id, projectData);
-        setProjects(prevProjects =>
-          prevProjects.map(p => (p._id === projectData._id ? result.project : p))
-        );
+        if (result.project) {
+            setProjects(prevProjects =>
+                (prevProjects || []).map(p => (p._id === projectData._id ? result.project : p))
+            );
+        }
         showFeedback('Projeto atualizado com sucesso!', 'success');
       } else {
         result = await createProject(projectData, imageFile);
-        setProjects(prevProjects => [result.project, ...prevProjects]);
+        if (result.project) {
+            setProjects(prevProjects => [result.project, ...(prevProjects || [])]);
+        }
         showFeedback('Projeto criado com sucesso!', 'success');
       }
       setEditingProject(undefined);
@@ -67,7 +71,9 @@ const ProjectsDashboard: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await deleteProject(id);
-      setProjects(prevProjects => prevProjects.filter(p => p._id !== id));
+      setProjects(prevProjects => 
+        (prevProjects || []).filter(p => p._id !== id)
+      );
       showFeedback('Projeto excluído com sucesso!', 'success');
     } catch (error) {
       console.error(error);
