@@ -231,7 +231,7 @@ O projeto é totalmente responsivo, com breakpoints otimizados:
 
 O projeto está configurado para deploy na plataforma Lovable:
 - URL do projeto: https://lovable.dev/projects/3c71a379-a7ee-4182-9c85-17a40707b693
-- Backend hospedado em: https://portfolio-backend-dqxo.onrender.com
+- Backend hospedado em: https://portfolio-backend-pr7h.onrender.com
 
 ## 🤝 Contribuição
 

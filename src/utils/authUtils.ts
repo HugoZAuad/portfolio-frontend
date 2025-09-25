@@ -3,7 +3,7 @@ import axios from 'axios';
 export const checkAuth = async (): Promise<boolean> => {
   try {
     const response = await axios.get(
-      'https://portfolio-backend-dqxo.onrender.com/auth/profile',
+      'https://portfolio-backend-pr7h.onrender.com/auth/profile',
       { withCredentials: true }
     );
     return !!response.data.email;
@@ -13,14 +13,14 @@ export const checkAuth = async (): Promise<boolean> => {
 };
 
 export const logoutUser = async (): Promise<void> => {
-  await axios.get('https://portfolio-backend-dqxo.onrender.com/auth/logout', {
+  await axios.get('https://portfolio-backend-pr7h.onrender.com/auth/logout', {
     withCredentials: true,
   });
 };
 
 export const loginUser = async (email: string, password: string) => {
   return axios.post(
-    'https://portfolio-backend-dqxo.onrender.com/auth/login',
+    'https://portfolio-backend-pr7h.onrender.com/auth/login',
     { email, password },
     { withCredentials: true }
   );
