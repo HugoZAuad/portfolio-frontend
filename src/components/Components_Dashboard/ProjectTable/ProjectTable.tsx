@@ -14,7 +14,7 @@ import type { Project } from '../../../services/projectService/projectService.ty
 interface Props {
   projects: Project[];
   onEdit: (project: Project) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string) => void; 
 }
 
 const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
@@ -30,10 +30,16 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
       <TableBody>
         {projects.map((project) => (
           <ProjectRow
-            key={project._id}
+            key={project._id || project.title} 
             project={project}
             onEdit={() => onEdit(project)}
-            onDelete={() => onDelete(project._id!)}
+            onDelete={() => {
+              if (project._id) {
+                onDelete(project._id);
+              } else {
+                console.error("ID do projeto não encontrado para exclusão!");
+              }
+            }}
           />
         ))}
       </TableBody>

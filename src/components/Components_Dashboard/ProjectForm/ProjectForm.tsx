@@ -12,6 +12,7 @@ import {
 import type { Project, ProjectType } from '../../../services/projectService/projectService.types';
 
 interface Props {
+
   onSubmit: (project: Project, imageFile?: File) => void;
   initialData?: Project;
 }
@@ -20,6 +21,8 @@ const projectTypes: ProjectType[] = ['Frontend', 'Backend', 'Fullstack'];
 
 const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   const [form, setForm] = useState<Project>({
+    
+    _id: undefined,
     title: '',
     description: '',
     linkRepo: '',
@@ -32,8 +35,27 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
 
   useEffect(() => {
     if (initialData) {
-      const { title, description, linkRepo, linkDeploy, imageUrl, type } = initialData;
-      setForm({ title, description, linkRepo, linkDeploy, imageUrl, type });
+      
+      const { _id, title, description, linkRepo, linkDeploy, imageUrl, type } = initialData;
+      setForm({ 
+          _id,
+          title, 
+          description, 
+          linkRepo, 
+          linkDeploy, 
+          imageUrl, 
+          type 
+      });
+    } else {
+      setForm({
+        _id: undefined,
+        title: '',
+        description: '',
+        linkRepo: '',
+        linkDeploy: '',
+        imageUrl: '',
+        type: 'Fullstack',
+      });
     }
   }, [initialData]);
 
@@ -45,21 +67,25 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
     e.preventDefault();
     
     try {
-      await onSubmit({ ...form }, imageFile);
+      await onSubmit({ ...form }, imageFile); 
       
-      // Reset do formulário após sucesso
-      setForm({
-        title: '',
-        description: '',
-        linkRepo: '',
-        linkDeploy: '',
-        imageUrl: '',
-        type: 'Fullstack',
-      });
-      setImageFile(undefined);
+      if (!initialData) {
+        setForm({
+            _id: undefined,
+            title: '',
+            description: '',
+            linkRepo: '',
+            linkDeploy: '',
+            imageUrl: '',
+            type: 'Fullstack',
+        });
+        setImageFile(undefined);
+      }
     } catch (error) {
-      console.error('Erro ao criar projeto:', error);
-      // Adicione tratamento de erro visual aqui se necessário
+      console.error(
+        initialData ? 'Erro ao atualizar projeto:' : 'Erro ao criar projeto:', 
+        error
+      );
     }
   };
 

@@ -14,6 +14,7 @@ const ProjectRow: React.FC<Props> = ({ project, onEdit, onDelete }) => (
   <TableRow>
     <TableCell>{project.title}</TableCell>
     <TableCell>{project.description}</TableCell>
+    <TableCell>{project.type}</TableCell> 
     <TableCell>
       <Stack direction="row" spacing={1} flexWrap="wrap">
       </Stack>
