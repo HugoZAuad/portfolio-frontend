@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import {
   AppBar,
   Toolbar,
@@ -13,48 +13,46 @@ import {
   Button,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import LogoutIcon from '@mui/icons-material/Logout';
+} from "@mui/material"
+import MenuIcon from "@mui/icons-material/Menu"
+import LogoutIcon from "@mui/icons-material/Logout"
 // Adiciona o ícone Home
-import HomeIcon from '@mui/icons-material/Home'; 
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../contexts/AuthContext';
-import { useFeedback } from '../../../contexts/FeedbackContext';
+import HomeIcon from "@mui/icons-material/Home"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../../contexts/AuthContext"
+import { useFeedback } from "../../../contexts/FeedbackContext"
 
 const DashboardNavbar: React.FC = () => {
-  const { logout } = useAuth();
-  const { showFeedback } = useFeedback();
-  const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { logout } = useAuth()
+  const { showFeedback } = useFeedback()
+  const navigate = useNavigate()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"))
 
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = React.useState(false)
 
   const handleLogout = async () => {
     try {
-      await logout();
-      showFeedback('Logout realizado com sucesso!', 'success');
-      navigate('/login');
+      await logout()
+      showFeedback("Logout realizado com sucesso!", "success")
+      navigate("/login")
     } catch {
-      showFeedback('Erro ao deslogar.', 'error');
+      showFeedback("Erro ao deslogar.", "error")
     }
-  };
+  }
 
   const handleNavigate = (path: string) => {
-    navigate(path);
-    setDrawerOpen(false);
-  };
-  
-  // NOVA FUNÇÃO: Navega para a página inicial do portfólio (/)
+    navigate(path)
+    setDrawerOpen(false)
+  }
+
   const handleGoHome = () => {
-    navigate('/');
-  };
+    navigate("/")
+  }
 
   const drawerContent = (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
-        {/* Adiciona o botão Home ao Drawer para mobile */}
         <ListItem disablePadding>
           <ListItemButton onClick={handleGoHome}>
             <ListItemText primary="Página Inicial" />
@@ -62,17 +60,19 @@ const DashboardNavbar: React.FC = () => {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => handleNavigate('/dashboard')}>
+          <ListItemButton onClick={() => handleNavigate("/dashboard")}>
             <ListItemText primary="Dashboard Geral" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => handleNavigate('/dashboard/projetos')}>
+          <ListItemButton onClick={() => handleNavigate("/dashboard/projetos")}>
             <ListItemText primary="Projetos" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => handleNavigate('/dashboard/habilidades')}>
+          <ListItemButton
+            onClick={() => handleNavigate("/dashboard/habilidades")}
+          >
             <ListItemText primary="Habilidades" />
           </ListItemButton>
         </ListItem>
@@ -84,38 +84,44 @@ const DashboardNavbar: React.FC = () => {
         </ListItem>
       </List>
     </Box>
-  );
+  )
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: '#1a1a2e' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          
-          {/* ÍCONE E TÍTULO DA ESQUERDA */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <AppBar position="static" sx={{ backgroundColor: "#1a1a2e" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="h6" sx={{ fontWeight: 600, mr: 1 }}>
               Painel de Hugo
             </Typography>
-            {/* NOVO: Botão Home ao lado do título (visível em todas as telas) */}
-            <IconButton color="inherit" onClick={handleGoHome} aria-label="Voltar para a página inicial">
-              <HomeIcon />
-            </IconButton>
           </Box>
-          
 
           {isMobile ? (
             <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
               <MenuIcon />
             </IconButton>
           ) : (
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button color="inherit" onClick={() => navigate('/dashboard')}>
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <IconButton
+                color="inherit"
+                onClick={handleGoHome}
+                aria-label="Voltar para a página inicial"
+              >
+                <HomeIcon />
+              </IconButton>
+              <Button color="inherit" onClick={() => navigate("/dashboard")}>
                 Dashboard
               </Button>
-              <Button color="inherit" onClick={() => navigate('/dashboard/projetos')}>
+              <Button
+                color="inherit"
+                onClick={() => navigate("/dashboard/projetos")}
+              >
                 Projetos
               </Button>
-              <Button color="inherit" onClick={() => navigate('/dashboard/habilidades')}>
+              <Button
+                color="inherit"
+                onClick={() => navigate("/dashboard/habilidades")}
+              >
                 Habilidades
               </Button>
               <IconButton color="inherit" onClick={handleLogout}>
@@ -126,11 +132,15 @@ const DashboardNavbar: React.FC = () => {
         </Toolbar>
       </AppBar>
 
-      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
         {drawerContent}
       </Drawer>
     </>
-  );
-};
+  )
+}
 
-export default DashboardNavbar;
+export default DashboardNavbar
