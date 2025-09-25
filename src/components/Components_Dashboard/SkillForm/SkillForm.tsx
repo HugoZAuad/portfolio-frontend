@@ -7,7 +7,7 @@ interface Props {
   initialData?: Skill;
 }
 
-const skillLevelOptions: SkillLevel[] = ['Basico', 'Intermediario', 'Avancado', 'Especialista'];
+const skillLevelOptions: SkillLevel[] = ['Basico', 'Intermediario', 'Avançado', 'Especialista'];
 
 const formatLevelForDisplay = (level: SkillLevel): string => {
     return level.charAt(0) + level.slice(1).toLowerCase();

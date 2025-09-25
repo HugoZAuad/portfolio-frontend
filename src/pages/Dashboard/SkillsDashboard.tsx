@@ -4,7 +4,7 @@ import SectionHeader from '../../components/Components_Dashboard/SectionHeader/S
 import SkillForm from '../../components/Components_Dashboard/SkillForm/SkillForm';
 import SkillTable from '../../components/Components_Dashboard/SkillTable/SkillTable';
 import FeedbackAlert from '../../components/Common/FeedbackAlert/FeedbackAlert';
-import { useSkillService } from '../../services/skillService/skillService';
+import { useSkillService, type SkillUpdateData } from '../../services/skillService/skillService';
 import type { Skill } from '../../services/skillService/skillsService.types';
 
 const SkillsDashboard: React.FC = () => {
@@ -36,21 +36,46 @@ const SkillsDashboard: React.FC = () => {
     loadSkills();
   }, [loadSkills]);
 
-  const handleCreateOrUpdate = async (skill: Skill, imageFile?: File) => {
+  const handleCreateSkill = async (skillData: Skill) => {
     try {
-      if (editingSkill && editingSkill.id) {
-        await updateSkill(editingSkill.id, skill);
-        showFeedback('Habilidade atualizada com sucesso!', 'success');
-      } else {
-        await createSkill(skill, imageFile);
-        showFeedback('Habilidade criada com sucesso!', 'success');
-      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: id, ...dataToSave } = skillData; 
+      
+      await createSkill(dataToSave as SkillUpdateData);
+      
+      showFeedback('Habilidade criada com sucesso!', 'success');
       setEditingSkill(undefined);
       await loadSkills();
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao criar habilidade:', error);
       showFeedback('Erro ao salvar habilidade.', 'error');
     }
+  };
+  
+  const handleUpdateSkill = async (skillData: Skill) => {
+    if (!editingSkill || !editingSkill.id) return; 
+    
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: id, ...dataToSave } = skillData;
+      
+      await updateSkill(editingSkill.id, dataToSave as SkillUpdateData);
+      
+      showFeedback('Habilidade atualizada com sucesso!', 'success');
+      setEditingSkill(undefined);
+      await loadSkills();
+    } catch (error) {
+      console.error('Erro ao atualizar habilidade:', error);
+      showFeedback('Erro ao salvar habilidade.', 'error');
+    }
+  };
+  
+  const handleSubmit = (skillData: Skill) => {
+      if (editingSkill && editingSkill.id) {
+          handleUpdateSkill(skillData);
+      } else {
+          handleCreateSkill(skillData);
+      }
   };
 
   const handleEdit = (skill: Skill) => {
@@ -71,7 +96,10 @@ const SkillsDashboard: React.FC = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 6 }}>
       <SectionHeader title="Gerenciar Habilidades" />
-      <SkillForm onSubmit={handleCreateOrUpdate} initialData={editingSkill} />
+      <SkillForm 
+        onSubmit={handleSubmit} 
+        initialData={editingSkill} 
+      />
       <SkillTable skills={skills} onEdit={handleEdit} onDelete={handleDelete} />
       <FeedbackAlert
         open={feedbackOpen}
