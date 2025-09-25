@@ -1,7 +1,7 @@
 export type ProjectType = 'Frontend' | 'Backend' | 'Fullstack';
 
 export interface Project {
-  _id: string;
+  id: string; 
   title: string;
   description: string;
   linkRepo?: string;
@@ -25,5 +25,5 @@ export interface PaginatedProjectsResponse {
 
 export interface DeleteResponse {
   message: string;
-  id: string; 
+  id: string;
 }

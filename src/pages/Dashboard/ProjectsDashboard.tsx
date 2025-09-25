@@ -27,7 +27,6 @@ const ProjectsDashboard: React.FC = () => {
   const loadProjects = useCallback(async () => {
     try {
       const response = await getProjects(page, limit);
-      
       setProjects(response.projects || []);
     } catch (error) {
       console.error(error);
@@ -39,45 +38,27 @@ const ProjectsDashboard: React.FC = () => {
     loadProjects();
   }, [loadProjects]);
 
-  const handleCreate = async (projectData: Project, imageFile?: File) => {
+  const handleSubmit = async (projectData: Project, imageFile?: File) => {
     try {
-      const result = await createProject(projectData, imageFile);
-      if (result.project) {
-        setProjects(prevProjects => [result.project, ...(prevProjects || [])]);
+      if (editingProject && editingProject.id) {
+        const result = await updateProject(editingProject.id, projectData);
+        if (result.project) {
+          setProjects(prevProjects =>
+            prevProjects.map(p => (p.id === editingProject.id ? result.project : p))
+          );
+        }
+        showFeedback('Projeto atualizado com sucesso!', 'success');
+      } else {
+        const result = await createProject(projectData, imageFile);
+        if (result.project) {
+          setProjects(prevProjects => [result.project, ...prevProjects]);
+        }
+        showFeedback('Projeto criado com sucesso!', 'success');
       }
-      showFeedback('Projeto criado com sucesso!', 'success');
-    } catch (error) {
-      console.error('Erro ao criar projeto:', error);
-      showFeedback('Erro ao criar projeto.', 'error');
-    }
-  };
-
-  const handleUpdate = async (projectData: Project) => {
-    if (!editingProject || !editingProject._id) {
-      showFeedback('Erro: Projeto para atualização não encontrado.', 'error');
-      return;
-    }
-    try {
-      const { ...updateData } = projectData; 
-      const result = await updateProject(editingProject._id, updateData as Project);
-      if (result.project) {
-        setProjects(prevProjects =>
-          (prevProjects || []).map(p => (p._id === editingProject._id ? result.project : p))
-        );
-      }
-      showFeedback('Projeto atualizado com sucesso!', 'success');
       setEditingProject(undefined);
     } catch (error) {
-      console.error('Erro ao atualizar projeto:', error);
-      showFeedback('Erro ao atualizar projeto.', 'error');
-    }
-  };
-
-  const handleSubmit = async (projectData: Project, imageFile?: File) => {
-    if (editingProject) {
-      await handleUpdate(projectData);
-    } else {
-      await handleCreate(projectData, imageFile);
+      console.error('Erro ao salvar projeto:', error);
+      showFeedback('Erro ao salvar projeto.', 'error');
     }
   };
 
@@ -92,9 +73,8 @@ const ProjectsDashboard: React.FC = () => {
     }
     try {
       await deleteProject(id);
-      // Filtra o projeto deletado com segurança
       setProjects(prevProjects =>
-        (prevProjects || []).filter(p => p._id !== id)
+        prevProjects.filter(p => p.id !== id)
       );
       showFeedback('Projeto excluído com sucesso!', 'success');
     } catch (error) {

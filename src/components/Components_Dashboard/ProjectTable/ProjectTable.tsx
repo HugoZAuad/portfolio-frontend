@@ -32,14 +32,12 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
       <TableBody>
         {projects.map((project) => (
           <ProjectRow
-            key={project._id || project.title}
+            key={project.id}
             project={project}
             onEdit={() => onEdit(project)}
             onDelete={() => {
-              if (project._id) {
-                onDelete(project._id);
-              } else {
-                console.error("ID do projeto não encontrado para exclusão!");
+              if (project.id) {
+                onDelete(project.id);
               }
             }}
           />
