@@ -19,7 +19,7 @@ const ProjectRow: React.FC<Props> = ({ project, onEdit, onDelete }) => (
       <Stack direction="row" spacing={1} flexWrap="wrap">
       </Stack>
     </TableCell>
-    <TableCell>
+    <TableCell align="center" sx={{ width: '100px' }}>
       <IconButton onClick={onEdit}>
         <EditIcon />
       </IconButton>

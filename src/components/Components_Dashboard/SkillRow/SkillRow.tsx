@@ -18,7 +18,7 @@ const SkillRow: React.FC<Props> = ({ skill, onEdit, onDelete }) => (
   <TableRow>
     <TableCell>{skill.name}</TableCell>
     <TableCell>{formatLevel(skill.level)}</TableCell>
-    <TableCell>
+    <TableCell align="center" sx={{ width: '100px' }}>
       <IconButton onClick={onEdit}>
         <EditIcon />
       </IconButton>
