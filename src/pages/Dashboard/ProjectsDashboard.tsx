@@ -5,7 +5,7 @@ import ProjectForm from '../../components/Components_Dashboard/ProjectForm/Proje
 import ProjectTable from '../../components/Components_Dashboard/ProjectTable/ProjectTable';
 import FeedbackAlert from '../../components/Common/FeedbackAlert/FeedbackAlert';
 import { useProjectService } from '../../services/projectService/projectService';
-import type { Project, ProjectResponse } from '../../services/projectService/projectService.types';
+import type { Project } from '../../services/projectService/projectService.types';
 
 const ProjectsDashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -27,6 +27,7 @@ const ProjectsDashboard: React.FC = () => {
   const loadProjects = useCallback(async () => {
     try {
       const response = await getProjects(page, limit);
+      
       setProjects(response.projects || []);
     } catch (error) {
       console.error(error);
@@ -38,29 +39,45 @@ const ProjectsDashboard: React.FC = () => {
     loadProjects();
   }, [loadProjects]);
 
-  const handleCreateOrUpdate = async (projectData: Project, imageFile?: File) => {
-    let result: ProjectResponse;
-    
+  const handleCreate = async (projectData: Project, imageFile?: File) => {
     try {
-      if (editingProject && editingProject._id) {
-        result = await updateProject(editingProject._id, projectData);
-        if (result.project) {
-            setProjects(prevProjects =>
-                (prevProjects || []).map(p => (p._id === editingProject._id ? result.project : p))
-            );
-        }
-        showFeedback('Projeto atualizado com sucesso!', 'success');
-      } else {
-        result = await createProject(projectData, imageFile);
-        if (result.project) {
-            setProjects(prevProjects => [result.project, ...(prevProjects || [])]);
-        }
-        showFeedback('Projeto criado com sucesso!', 'success');
+      const result = await createProject(projectData, imageFile);
+      if (result.project) {
+        setProjects(prevProjects => [result.project, ...(prevProjects || [])]);
       }
+      showFeedback('Projeto criado com sucesso!', 'success');
+    } catch (error) {
+      console.error('Erro ao criar projeto:', error);
+      showFeedback('Erro ao criar projeto.', 'error');
+    }
+  };
+
+  const handleUpdate = async (projectData: Project) => {
+    if (!editingProject || !editingProject._id) {
+      showFeedback('Erro: Projeto para atualização não encontrado.', 'error');
+      return;
+    }
+    try {
+      const { ...updateData } = projectData; 
+      const result = await updateProject(editingProject._id, updateData as Project);
+      if (result.project) {
+        setProjects(prevProjects =>
+          (prevProjects || []).map(p => (p._id === editingProject._id ? result.project : p))
+        );
+      }
+      showFeedback('Projeto atualizado com sucesso!', 'success');
       setEditingProject(undefined);
     } catch (error) {
-      console.error(error);
-      showFeedback('Erro ao salvar projeto.', 'error');
+      console.error('Erro ao atualizar projeto:', error);
+      showFeedback('Erro ao atualizar projeto.', 'error');
+    }
+  };
+
+  const handleSubmit = async (projectData: Project, imageFile?: File) => {
+    if (editingProject) {
+      await handleUpdate(projectData);
+    } else {
+      await handleCreate(projectData, imageFile);
     }
   };
 
@@ -69,14 +86,19 @@ const ProjectsDashboard: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      showFeedback('ID do projeto não encontrado para exclusão.', 'error');
+      return;
+    }
     try {
       await deleteProject(id);
-      setProjects(prevProjects => 
+      // Filtra o projeto deletado com segurança
+      setProjects(prevProjects =>
         (prevProjects || []).filter(p => p._id !== id)
       );
       showFeedback('Projeto excluído com sucesso!', 'success');
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao excluir projeto:', error);
       showFeedback('Erro ao excluir projeto.', 'error');
     }
   };
@@ -84,7 +106,7 @@ const ProjectsDashboard: React.FC = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 6 }}>
       <SectionHeader title="Gerenciar Projetos" />
-      <ProjectForm onSubmit={handleCreateOrUpdate} initialData={editingProject} />
+      <ProjectForm onSubmit={handleSubmit} initialData={editingProject} />
       <ProjectTable projects={projects} onEdit={handleEdit} onDelete={handleDelete} />
       <FeedbackAlert
         open={feedbackOpen}

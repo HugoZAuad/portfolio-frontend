@@ -1,24 +1,18 @@
 export type ProjectType = 'Frontend' | 'Backend' | 'Fullstack';
 
 export interface Project {
-  _id?: string;
+  _id: string;
   title: string;
   description: string;
   linkRepo?: string;
   linkDeploy?: string;
   imageUrl?: string;
-  images?: { url: string }[];
   type: ProjectType;
 }
 
 export interface ProjectResponse {
-  project: Project
   message: string;
-  data: Project;
-}
-
-export interface DeleteResponse {
-  message: string;
+  project: Project;
 }
 
 export interface PaginatedProjectsResponse {
@@ -26,5 +20,10 @@ export interface PaginatedProjectsResponse {
   total: number;
   page: number;
   limit: number;
-  hasMore: boolean;
+  totalPages: number;
+}
+
+export interface DeleteResponse {
+  message: string;
+  id: string; 
 }
