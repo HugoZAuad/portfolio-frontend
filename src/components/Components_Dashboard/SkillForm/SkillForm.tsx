@@ -10,8 +10,8 @@ interface Props {
 const skillLevelOptions: SkillLevel[] = ['BASICO', 'INTERMEDIARIO', 'AVANCADO', 'EXPERIENTE'];
 
 const formatLevelForDisplay = (level: SkillLevel): string => {
-    if (level === 'BASICO') return 'Básico';
     if (level === 'AVANCADO') return 'Avançado';
+    if (level === 'BASICO') return 'Básico';
     if (level === 'EXPERIENTE') return 'Especialista';
     
     return level.charAt(0) + level.slice(1).toLowerCase();
@@ -34,7 +34,7 @@ const SkillForm: React.FC<Props> = ({ onSubmit, initialData }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(form);
+    onSubmit(form); 
     setForm({ 
         id: '', 
         name: '', 
@@ -58,12 +58,15 @@ const SkillForm: React.FC<Props> = ({ onSubmit, initialData }) => {
                 labelId="skill-level-label"
                 label="Nível"
                 value={form.level}
-                onChange={(e) => handleChange('level', e.target.value as SkillLevel)}
+                onChange={(e) => handleChange('level', e.target.value as SkillLevel)} 
                 fullWidth
             >
                 {skillLevelOptions.map((level) => (
-                    <MenuItem key={level} value={level}>
-                        {formatLevelForDisplay(level)} 
+                    <MenuItem 
+                        key={level} 
+                        value={level}
+                    >
+                        {formatLevelForDisplay(level)} // ESTE É O VALOR EXIBIDO ('Avançado')
                     </MenuItem>
                 ))}
             </Select>
