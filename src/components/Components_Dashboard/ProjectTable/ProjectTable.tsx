@@ -14,7 +14,7 @@ import type { Project } from '../../../services/projectService/projectService.ty
 interface Props {
   projects: Project[];
   onEdit: (project: Project) => void;
-  onDelete: (id: string) => void; 
+  onDelete: (id: string) => void;
 }
 
 const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
@@ -24,7 +24,9 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
         <TableRow>
           <TableCell>Título</TableCell>
           <TableCell>Descrição</TableCell>
-          <TableCell>Ações</TableCell>
+          <TableCell>Tipo</TableCell> 
+          <TableCell></TableCell> 
+          <TableCell>Ações</TableCell> 
         </TableRow>
       </TableHead>
       <TableBody>
