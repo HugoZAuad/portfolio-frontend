@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Box, Typography, TextField, useTheme, Alert } from '@mui/material';
 import Button from '../../Common/Button/Button';
 
+const CONTACT_API_URL = 'https://portfolio-backend-pr7h.onrender.com/contact';
+
 const ContactForm: React.FC = () => {
   const theme = useTheme();
 
@@ -35,13 +37,15 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
     if (!isFormValid) return;
 
-    setIsSending(true);
     setFeedback(null);
+    setIsSending(true);
 
     try {
-      const response = await fetch('https://portfolio-backend-pr7h.onrender.com/contact', {
+      const response = await fetch(CONTACT_API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(formData),
       });
 
@@ -57,6 +61,8 @@ const ContactForm: React.FC = () => {
     } finally {
       setIsSending(false);
     }
+    
+    setTimeout(() => setFeedback(null), 5000);
   };
 
   return (
@@ -72,6 +78,17 @@ const ContactForm: React.FC = () => {
         Envie uma Mensagem
       </Typography>
 
+      {feedback === 'success' && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            Mensagem enviada com sucesso!
+          </Alert>
+      )}
+      {feedback === 'error' && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            Ocorreu um erro ao enviar. Tente novamente ou entre em contato diretamente.
+          </Alert>
+      )}
+      
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -98,6 +115,8 @@ const ContactForm: React.FC = () => {
           onChange={handleChange}
           margin="normal"
           required
+          error={formData.email.length > 0 && !isEmailValid(formData.email)}
+          helperText={formData.email.length > 0 && !isEmailValid(formData.email) ? 'Email inválido' : ''}
           sx={{
             mb: 2,
             '& .MuiOutlinedInput-root': {
@@ -132,17 +151,6 @@ const ContactForm: React.FC = () => {
         >
           {isSending ? 'Enviando...' : 'Enviar Mensagem'}
         </Button>
-
-        {feedback === 'success' && (
-          <Alert severity="success" sx={{ mt: 3 }}>
-            Mensagem enviada com sucesso!
-          </Alert>
-        )}
-        {feedback === 'error' && (
-          <Alert severity="error" sx={{ mt: 3 }}>
-            Ocorreu um erro ao enviar. Tente novamente.
-          </Alert>
-        )}
       </Box>
     </>
   );

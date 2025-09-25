@@ -1,10 +1,10 @@
-# Portfolio Frontend
+# Portfólio Frontend
 
-Um portfólio pessoal moderno e responsivo construído com React, TypeScript e Material-UI, apresentando projetos, habilidades e informações de contato de forma elegante e interativa.
+Um portfólio pessoal moderno e responsivo construído com React, TypeScript e Material-UI, apresentando projetos, habilidades e informações de contato de forma elegante e interativa. Inclui um painel administrativo para gerenciamento de conteúdo via API backend.
 
 ## 🚀 Sobre o Projeto
 
-Este é um portfólio frontend desenvolvido para apresentar trabalhos, habilidades e experiências profissionais. O projeto utiliza tecnologias modernas para criar uma experiência de usuário fluida e visualmente atraente, com suporte a temas claro e escuro, animações cinematográficas e um dashboard administrativo para gerenciamento de conteúdo.
+Este é um portfólio frontend desenvolvido para apresentar trabalhos, habilidades e experiências profissionais. O projeto utiliza tecnologias modernas para criar uma experiência de usuário fluida e visualmente atraente, com suporte a temas claro e escuro, animações cinematográficas, sistema de feedback e integração com backend para CRUD de projetos e habilidades. Inclui seções públicas (Home, Sobre, Projetos, Habilidades, Contato) e um dashboard protegido para administração.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -25,7 +25,7 @@ Este é um portfólio frontend desenvolvido para apresentar trabalhos, habilidad
 
 ### Comunicação e Dados
 - **Axios 1.12.2** - Cliente HTTP para requisições à API
-- **Backend API** - Servidor Nest.js hospedado no Render
+- **Backend API** - Servidor Nest.js hospedado no Render (https://portfolio-backend-pr7h.onrender.com)
 
 ### Desenvolvimento e Qualidade
 - **ESLint 9.35.0** - Linting de código JavaScript/TypeScript
@@ -58,6 +58,7 @@ portfolio-frontend/
 │   │   ├── Components_Projects/ # Seção Projetos
 │   │   └── Components_Skills/ # Seção Habilidades
 │   ├── contexts/            # Contextos React
+│   │   ├── ApiContext.tsx   # Configuração da API Axios
 │   │   ├── AuthContext.tsx  # Gerenciamento de autenticação
 │   │   ├── FeedbackContext.tsx # Feedback do usuário
 │   │   └── ThemeContext.tsx # Gerenciamento de tema
@@ -74,10 +75,11 @@ portfolio-frontend/
 │   ├── routes/             # Configuração de rotas
 │   │   └── ProtectedRoute/ # Rota protegida
 │   ├── services/           # Serviços de API
+│   │   ├── api/            # Configuração base da API
 │   │   ├── projectService/ # Serviço de projetos
 │   │   └── skillService/   # Serviço de habilidades
 │   ├── utils/              # Utilitários
-│   │   ├── api.ts          # Configuração da API
+│   │   ├── api.ts          # Configuração da API (duplicado?)
 │   │   ├── authUtils.ts    # Utilitários de autenticação
 │   │   ├── format.ts       # Funções de formatação
 │   │   └── validation.ts   # Validações
@@ -119,44 +121,45 @@ portfolio-frontend/
 
 ### Ideias de Design
 1. **Gradientes Personalizados:** Uso de gradientes lineares para fundos, criando profundidade visual
-2. **Tipografia Moderna:** Fonte Orbitron para títulos, combinada com Inter/Roboto para corpo do texto
+2. **Tipografia Moderna:** Fonte Inter para corpo do texto, com efeitos cinematográficos no nome
 3. **Scrollbars Customizadas:** Scrollbars estilizadas para combinar com o tema
-4. **Animações Cinematográficas:** Efeitos de digitação e transições suaves
+4. **Animações Cinematográficas:** Efeitos de digitação e transições suaves via Framer Motion
 5. **Design Responsivo:** Breakpoints otimizados para mobile, tablet e desktop
 6. **Microinterações:** Hover effects e transições suaves em botões e links
 
 ## 🏗️ Arquitetura e Decisões Técnicas
 
 ### Gerenciamento de Estado
-- **Context API:** Utilizado para temas, autenticação e feedback
-- **Local Storage:** Persistência de preferências do usuário
-- **State Management:** Estados locais para componentes específicos
+- **Context API:** Utilizado para temas, autenticação, feedback e configuração da API
+- **Local Storage:** Persistência de preferências do usuário (tema, autenticação)
+- **State Management:** Estados locais para componentes específicos (e.g., paginação de projetos)
 
 ### Estrutura de Componentes
 - **Componentes Atômicos:** Divisão em componentes pequenos e reutilizáveis
-- **Feature-based Structure:** Organização por funcionalidades
-- **Layouts Separados:** Layout público vs. dashboard administrativo
+- **Feature-based Structure:** Organização por funcionalidades (e.g., Components_Home, Components_Dashboard)
+- **Layouts Separados:** Layout público para seções públicas, layout dashboard para administração
 
 ### Comunicação com Backend
 - **RESTful API:** Endpoints para projetos, habilidades e autenticação
-- **Axios Interceptors:** Configuração centralizada para requisições
-- **Error Handling:** Tratamento de erros com feedback visual
+- **Axios Interceptors:** Configuração centralizada para requisições, incluindo FormData para uploads
+- **Error Handling:** Tratamento de erros com feedback visual e redirecionamento em 401 (não autorizado)
 
 ### Autenticação e Segurança
-- **JWT Authentication:** Autenticação baseada em tokens
-- **Protected Routes:** Rotas protegidas para áreas administrativas
-- **Session Management:** Gerenciamento de sessão com cookies
+- **JWT Authentication:** Autenticação baseada em tokens JWT via cookies
+- **Protected Routes:** Rotas protegidas para áreas administrativas (/dashboard/*)
+- **Session Management:** Gerenciamento de sessão com localStorage e verificação automática
 
 ### Validações e Utilitários
-- **Form Validation:** Validações de email e senha
+- **Form Validation:** Validações de email e senha em formulários
 - **Data Formatting:** Formatação de datas e textos
-- **Type Safety:** Tipagem rigorosa com TypeScript
+- **Type Safety:** Tipagem rigorosa com TypeScript (e.g., tipos Project, Skill)
 
 ## 🚀 Como Executar
 
 ### Pré-requisitos
 - Node.js (versão 18 ou superior)
 - npm ou yarn
+- Backend rodando (localmente ou via https://portfolio-backend-pr7h.onrender.com)
 
 ### Instalação
 ```bash
@@ -194,31 +197,26 @@ npm run lint
 ## 🌟 Funcionalidades
 
 ### Funcionalidades Públicas
-- **Home:** Apresentação pessoal com animações
-- **Sobre:** Informações pessoais e profissionais
-- **Projetos:** Portfólio de projetos com paginação
-- **Habilidades:** Lista de habilidades técnicas
-- **Contato:** Formulário de contato e informações
-- **Tema:** Toggle entre modo claro e escuro
+- **Home:** Apresentação pessoal com animações cinematográficas (título, subtítulo, botões, indicador de scroll)
+- **Sobre:** Informações pessoais e profissionais com avatar e texto
+- **Projetos:** Portfólio de projetos com paginação (6 por página), cards interativos e links para repositório/deploy
+- **Habilidades:** Lista de habilidades técnicas em cards
+- **Contato:** Formulário de contato com validação, detalhes de contato e informações adicionais
+- **Tema:** Toggle entre modo claro e escuro com persistência
+- **Navegação:** Navbar responsiva, menu social flutuante, botão voltar ao topo
 
 ### Funcionalidades Administrativas
-- **Dashboard:** Painel administrativo
-- **Gerenciamento de Projetos:** CRUD de projetos
-- **Gerenciamento de Habilidades:** CRUD de habilidades
-- **Upload de Imagens:** Sistema de upload para projetos
+- **Dashboard:** Painel principal com cards para gerenciar projetos e habilidades
+- **Gerenciamento de Projetos:** CRUD completo (criar, editar, excluir) com upload de imagens via FormData
+- **Gerenciamento de Habilidades:** CRUD completo para habilidades técnicas
+- **Login:** Autenticação via JWT com redirecionamento automático
+- **Feedback:** Alertas visuais para sucesso/erro em operações
 
 ### UX/UI Features
-- **Animações:** Transições suaves e efeitos visuais
-- **Responsividade:** Design adaptável a todos os dispositivos
-- **Acessibilidade:** Suporte a leitores de tela
-- **Performance:** Otimizações para carregamento rápido
-
-## 🔧 Scripts Disponíveis
-
-- `npm run dev` - Inicia o servidor de desenvolvimento
-- `npm run build` - Cria a build de produção
-- `npm run lint` - Executa o linter
-- `npm run preview` - Preview da build de produção
+- **Animações:** Transições suaves e efeitos visuais com Framer Motion
+- **Responsividade:** Design adaptável a todos os dispositivos com Material-UI Grid
+- **Acessibilidade:** Suporte a leitores de tela e navegação por teclado
+- **Performance:** Otimizações com Vite para carregamento rápido
 
 ## 📱 Responsividade
 
@@ -229,9 +227,18 @@ O projeto é totalmente responsivo, com breakpoints otimizados:
 
 ## 🌐 Deploy
 
-O projeto está configurado para deploy na plataforma Lovable:
-- URL do projeto: https://lovable.dev/projects/3c71a379-a7ee-4182-9c85-17a40707b693
+O projeto está configurado para deploy na plataforma Vercel:
 - Backend hospedado em: https://portfolio-backend-pr7h.onrender.com
+- URL do projeto: https://portfolio-frontend-sand-five.vercel.app
+
+Para deploy local, certifique-se de configurar variáveis de ambiente se necessário (e.g., API base URL).
+
+## 🔧 Scripts Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Cria a build de produção
+- `npm run lint` - Executa o linter
+- `npm run preview` - Preview da build de produção
 
 ## 🤝 Contribuição
 
