@@ -66,7 +66,7 @@ const SkillForm: React.FC<Props> = ({ onSubmit, initialData }) => {
                         key={level} 
                         value={level}
                     >
-                        {formatLevelForDisplay(level)} // ESTE É O VALOR EXIBIDO ('Avançado')
+                        {formatLevelForDisplay(level)}
                     </MenuItem>
                 ))}
             </Select>
