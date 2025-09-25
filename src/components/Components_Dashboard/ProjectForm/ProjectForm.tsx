@@ -20,7 +20,7 @@ const projectTypes: ProjectType[] = ['Frontend', 'Backend', 'Fullstack'];
 
 const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   const [form, setForm] = useState<Project>({
-    _id: undefined,
+    id: '',
     title: '',
     description: '',
     linkRepo: '',
@@ -33,9 +33,9 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
 
   useEffect(() => {
     if (initialData) {
-      const { _id, title, description, linkRepo, linkDeploy, imageUrl, type } = initialData;
+      const { id, title, description, linkRepo, linkDeploy, imageUrl, type } = initialData;
       setForm({ 
-          _id,
+          id,
           title, 
           description, 
           linkRepo, 
@@ -45,7 +45,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
       });
     } else {
       setForm({
-        _id: undefined,
+        id: '',
         title: '',
         description: '',
         linkRepo: '',
@@ -68,7 +68,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
       
       if (!initialData) {
         setForm({
-            _id: undefined,
+            id: '',
             title: '',
             description: '',
             linkRepo: '',
