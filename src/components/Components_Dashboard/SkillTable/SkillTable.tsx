@@ -24,6 +24,7 @@ const SkillTable: React.FC<Props> = ({ skills, onEdit, onDelete }) => (
       <TableHead>
         <TableRow>
           <TableCell>Nome</TableCell>
+          <TableCell>Categoria</TableCell>
           <TableCell>Nível</TableCell>
           <TableCell align="center" sx={{ width: '100px' }}>Ações</TableCell>
         </TableRow>
@@ -34,7 +35,7 @@ const SkillTable: React.FC<Props> = ({ skills, onEdit, onDelete }) => (
             key={skill.id}
             skill={skill}
             onEdit={() => onEdit(skill)}
-            onDelete={() => onDelete(skill.id!)}
+            onDelete={() => onDelete(skill.id)}
           />
         ))}
       </TableBody>
