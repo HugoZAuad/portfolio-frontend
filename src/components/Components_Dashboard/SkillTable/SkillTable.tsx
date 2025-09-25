@@ -25,7 +25,7 @@ const SkillTable: React.FC<Props> = ({ skills, onEdit, onDelete }) => (
         <TableRow>
           <TableCell>Nome</TableCell>
           <TableCell>Nível</TableCell>
-          <TableCell>Ações</TableCell>
+          <TableCell align="center" sx={{ width: '100px' }}>Ações</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

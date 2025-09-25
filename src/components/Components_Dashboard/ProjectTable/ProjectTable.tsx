@@ -11,6 +11,7 @@ import {
 import ProjectRow from '../ProjectRow/ProjectRow';
 import type { Project } from '../../../services/projectService/projectService.types';
 
+
 interface Props {
   projects: Project[];
   onEdit: (project: Project) => void;
@@ -24,9 +25,9 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
         <TableRow>
           <TableCell>Título</TableCell>
           <TableCell>Descrição</TableCell>
-          <TableCell>Tipo</TableCell>
-          <TableCell></TableCell>
-          <TableCell>Ações</TableCell>
+          {/* Coluna 'Tipo' */}
+          <TableCell>Tipo</TableCell> 
+          <TableCell align="center" sx={{ width: '100px' }}>Ações</TableCell> 
         </TableRow>
       </TableHead>
       <TableBody>
@@ -35,11 +36,7 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
             key={project.id}
             project={project}
             onEdit={() => onEdit(project)}
-            onDelete={() => {
-              if (project.id) {
-                onDelete(project.id);
-              }
-            }}
+            onDelete={() => onDelete(project.id!)}
           />
         ))}
       </TableBody>

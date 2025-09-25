@@ -16,6 +16,8 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
+// Adiciona o ícone Home
+import HomeIcon from '@mui/icons-material/Home'; 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useFeedback } from '../../../contexts/FeedbackContext';
@@ -43,10 +45,22 @@ const DashboardNavbar: React.FC = () => {
     navigate(path);
     setDrawerOpen(false);
   };
+  
+  // NOVA FUNÇÃO: Navega para a página inicial do portfólio (/)
+  const handleGoHome = () => {
+    navigate('/');
+  };
 
   const drawerContent = (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
+        {/* Adiciona o botão Home ao Drawer para mobile */}
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleGoHome}>
+            <ListItemText primary="Página Inicial" />
+            <HomeIcon sx={{ ml: 1 }} />
+          </ListItemButton>
+        </ListItem>
         <ListItem disablePadding>
           <ListItemButton onClick={() => handleNavigate('/dashboard')}>
             <ListItemText primary="Dashboard Geral" />
@@ -76,9 +90,18 @@ const DashboardNavbar: React.FC = () => {
     <>
       <AppBar position="static" sx={{ backgroundColor: '#1a1a2e' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h6" sx={{ fontWeight: 600 }}>
-            Painel de Hugo
-          </Typography>
+          
+          {/* ÍCONE E TÍTULO DA ESQUERDA */}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="h6" sx={{ fontWeight: 600, mr: 1 }}>
+              Painel de Hugo
+            </Typography>
+            {/* NOVO: Botão Home ao lado do título (visível em todas as telas) */}
+            <IconButton color="inherit" onClick={handleGoHome} aria-label="Voltar para a página inicial">
+              <HomeIcon />
+            </IconButton>
+          </Box>
+          
 
           {isMobile ? (
             <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
