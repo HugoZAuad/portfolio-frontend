@@ -21,6 +21,7 @@ export interface PaginatedProjectsResponse {
   page: number;
   limit: number;
   totalPages: number;
+  hasMore: boolean;
 }
 
 export interface DeleteResponse {
