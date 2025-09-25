@@ -5,7 +5,7 @@ import ProjectForm from '../../components/Components_Dashboard/ProjectForm/Proje
 import ProjectTable from '../../components/Components_Dashboard/ProjectTable/ProjectTable';
 import FeedbackAlert from '../../components/Common/FeedbackAlert/FeedbackAlert';
 import { useProjectService } from '../../services/projectService/projectService';
-import type { Project } from '../../services/projectService/projectService.types';
+import type { Project, ProjectResponse } from '../../services/projectService/projectService.types';
 
 const ProjectsDashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -38,17 +38,22 @@ const ProjectsDashboard: React.FC = () => {
     loadProjects();
   }, [loadProjects]);
 
-  const handleCreateOrUpdate = async (project: Project, imageFile?: File) => {
+  const handleCreateOrUpdate = async (projectData: Project, imageFile?: File) => {
+    let result: ProjectResponse;
+    
     try {
-      if (editingProject && editingProject._id) {
-        await updateProject(editingProject._id, project);
+      if (projectData._id) {
+        result = await updateProject(projectData._id, projectData);
+        setProjects(prevProjects =>
+          prevProjects.map(p => (p._id === projectData._id ? result.project : p))
+        );
         showFeedback('Projeto atualizado com sucesso!', 'success');
       } else {
-        await createProject(project, imageFile);
+        result = await createProject(projectData, imageFile);
+        setProjects(prevProjects => [result.project, ...prevProjects]);
         showFeedback('Projeto criado com sucesso!', 'success');
       }
       setEditingProject(undefined);
-      await loadProjects();
     } catch (error) {
       console.error(error);
       showFeedback('Erro ao salvar projeto.', 'error');
@@ -62,8 +67,8 @@ const ProjectsDashboard: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await deleteProject(id);
+      setProjects(prevProjects => prevProjects.filter(p => p._id !== id));
       showFeedback('Projeto excluído com sucesso!', 'success');
-      await loadProjects();
     } catch (error) {
       console.error(error);
       showFeedback('Erro ao excluir projeto.', 'error');

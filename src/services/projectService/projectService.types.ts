@@ -12,6 +12,7 @@ export interface Project {
 }
 
 export interface ProjectResponse {
+  project: Project
   message: string;
   data: Project;
 }

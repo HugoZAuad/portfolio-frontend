@@ -24,15 +24,15 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
         <TableRow>
           <TableCell>Título</TableCell>
           <TableCell>Descrição</TableCell>
-          <TableCell>Tipo</TableCell> 
-          <TableCell></TableCell> 
-          <TableCell>Ações</TableCell> 
+          <TableCell>Tipo</TableCell>
+          <TableCell></TableCell>
+          <TableCell>Ações</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {projects.map((project) => (
           <ProjectRow
-            key={project._id || project.title} 
+            key={project._id || project.title}
             project={project}
             onEdit={() => onEdit(project)}
             onDelete={() => {
