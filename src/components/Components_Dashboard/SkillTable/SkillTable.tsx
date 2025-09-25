@@ -31,10 +31,10 @@ const SkillTable: React.FC<Props> = ({ skills, onEdit, onDelete }) => (
       <TableBody>
         {skills.map((skill) => (
           <SkillRow
-            key={skill._id}
+            key={skill.id}
             skill={skill}
             onEdit={() => onEdit(skill)}
-            onDelete={() => onDelete(skill._id!)}
+            onDelete={() => onDelete(skill.id!)}
           />
         ))}
       </TableBody>

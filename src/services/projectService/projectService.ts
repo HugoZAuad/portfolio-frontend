@@ -6,6 +6,8 @@ import type {
   PaginatedProjectsResponse,
 } from './projectService.types';
 
+export type ProjectUpdateData = Partial<Omit<Project, 'id' | 'imageUrl'>>;
+
 export const useProjectService = () => {
   const api = useApi();
 
@@ -27,14 +29,14 @@ export const useProjectService = () => {
     imageFile?: File
   ): Promise<ProjectResponse> => {
     const formData = new FormData();
-    
+
     formData.append('title', project.title);
     formData.append('description', project.description);
     formData.append('type', String(project.type)); 
-    
+
     if (project.linkRepo) formData.append('linkRepo', project.linkRepo);
     if (project.linkDeploy) formData.append('linkDeploy', project.linkDeploy);
-    
+
     if (imageFile) {
         formData.append('image', imageFile);
     }
@@ -45,9 +47,9 @@ export const useProjectService = () => {
 
   const updateProject = async (
     id: string,
-    project: Project
+    projectUpdateData: ProjectUpdateData
   ): Promise<ProjectResponse> => {
-    const response = await api.patch(`/projects/${id}`, project);
+    const response = await api.patch(`/projects/${id}`, projectUpdateData);
     return response.data;
   };
 

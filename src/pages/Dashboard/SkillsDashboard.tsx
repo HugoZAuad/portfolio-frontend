@@ -38,8 +38,8 @@ const SkillsDashboard: React.FC = () => {
 
   const handleCreateOrUpdate = async (skill: Skill, imageFile?: File) => {
     try {
-      if (editingSkill && editingSkill._id) {
-        await updateSkill(editingSkill._id, skill);
+      if (editingSkill && editingSkill.id) {
+        await updateSkill(editingSkill.id, skill);
         showFeedback('Habilidade atualizada com sucesso!', 'success');
       } else {
         await createSkill(skill, imageFile);
