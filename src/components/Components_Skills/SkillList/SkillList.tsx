@@ -51,13 +51,13 @@ const SkillsList: React.FC<Props> = ({ skills }) => {
                 if (!skillsInCategory || skillsInCategory.length === 0) return null;
 
                 return (
-                    <Grid size={{ xs: 12, md: 6 }} key={category}>
+                    <Grid size={{xs:12}} key={category}>
                         <Typography variant="h5" gutterBottom sx={{ mt: 2, mb: 1 }}>
                             {formatCategoryForDisplay(category)}
                         </Typography>
                         <Grid container spacing={2}>
                             {skillsInCategory.map((skill) => (
-                                <Grid size={{ xs: 12, md: 6 }} key={skill.id}>
+                                <Grid size={{xs:12, sm:6, md:4}}  key={skill.id}>
                                     <Card sx={{ height: '100%' }}>
                                         <CardContent>
                                             <Typography variant="h6">{skill.name}</Typography>

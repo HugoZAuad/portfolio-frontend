@@ -59,7 +59,7 @@ const getInitialFormState = (data?: Skill): Skill =>
 
 const SkillForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   const [form, setForm] = useState<Skill>(getInitialFormState(initialData))
-  const [errors, setErrors] = useState({ name: "" })
+  const [errors, setErrors] = useState<{ name: string }>({ name: "" })
 
   useEffect(() => {
     setForm(getInitialFormState(initialData))
@@ -162,4 +162,4 @@ const SkillForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   )
 }
 
-export default SkillForm
+export default SkillForm;
