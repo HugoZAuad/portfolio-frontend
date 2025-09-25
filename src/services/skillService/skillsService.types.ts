@@ -1,12 +1,14 @@
+export type SkillLevel = 'Basico' | 'Intermediario' | 'Avancado' | 'Especialista'; 
+
 export interface Skill {
-  id?: string;
+  id: string;
   name: string;
-  level: number;
+  level: SkillLevel;
 }
 
 export interface SkillResponse {
   message: string;
-  skill: Skill;
+  data: Skill;
 }
 
 export interface DeleteResponse {

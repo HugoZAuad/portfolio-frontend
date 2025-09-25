@@ -10,10 +10,14 @@ interface Props {
   onDelete: () => void;
 }
 
+const formatLevel = (level: string) => {
+    return level.charAt(0) + level.slice(1).toLowerCase();
+};
+
 const SkillRow: React.FC<Props> = ({ skill, onEdit, onDelete }) => (
   <TableRow>
     <TableCell>{skill.name}</TableCell>
-    <TableCell>{skill.level}%</TableCell>
+    <TableCell>{formatLevel(skill.level)}</TableCell>
     <TableCell>
       <IconButton onClick={onEdit}>
         <EditIcon />
