@@ -1,4 +1,4 @@
-export type SkillLevel = 'Basico' | 'Intermediario' | 'Avançado' | 'Especialista'; 
+export type SkillLevel = 'BASICO' | 'INTERMEDIARIO' | 'AVANCADO' | 'EXPERIENTE'; 
 
 export interface Skill {
   id: string;
