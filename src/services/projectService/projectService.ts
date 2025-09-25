@@ -27,12 +27,17 @@ export const useProjectService = () => {
     imageFile?: File
   ): Promise<ProjectResponse> => {
     const formData = new FormData();
+    
     formData.append('title', project.title);
     formData.append('description', project.description);
-    formData.append('type', project.type);
+    formData.append('type', String(project.type)); 
+    
     if (project.linkRepo) formData.append('linkRepo', project.linkRepo);
     if (project.linkDeploy) formData.append('linkDeploy', project.linkDeploy);
-    if (imageFile) formData.append('image', imageFile);
+    
+    if (imageFile) {
+        formData.append('image', imageFile);
+    }
 
     const response = await api.post('/projects', formData);
     return response.data;
