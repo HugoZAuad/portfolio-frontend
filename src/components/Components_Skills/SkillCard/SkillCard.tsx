@@ -3,7 +3,7 @@ import { Box, Typography, LinearProgress, useTheme } from '@mui/material';
 
 interface SkillProps {
   name: string;
-  level: number;
+  level: string;
 }
 
 const SkillCard: React.FC<SkillProps> = ({ name, level }) => {
@@ -16,12 +16,11 @@ const SkillCard: React.FC<SkillProps> = ({ name, level }) => {
           {name}
         </Typography>
         <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-          {level}%
+          {level}
         </Typography>
       </Box>
       <LinearProgress
         variant="determinate"
-        value={level}
         sx={{
           height: 8,
           borderRadius: 4,
