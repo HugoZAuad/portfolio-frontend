@@ -27,7 +27,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const api = axios.create({
-    baseURL: 'https://portfolio-backend-dqxo.onrender.com',
+    baseURL: 'https://portfolio-backend-pr7h.onrender.com',
   });
 
   api.interceptors.request.use(
