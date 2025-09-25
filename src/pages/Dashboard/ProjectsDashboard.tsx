@@ -41,7 +41,9 @@ const ProjectsDashboard: React.FC = () => {
   const handleSubmit = async (projectData: Project, imageFile?: File) => {
     try {
       if (editingProject && editingProject.id) {
-        const result = await updateProject(editingProject.id, projectData);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { id: id, imageUrl: imageUrl, ...dataToUpdate } = projectData; 
+        const result = await updateProject(editingProject.id, dataToUpdate, imageFile); 
         if (result.project) {
           setProjects(prevProjects =>
             prevProjects.map(p => (p.id === editingProject.id ? result.project : p))

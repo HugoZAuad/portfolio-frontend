@@ -32,7 +32,7 @@ export const useProjectService = () => {
 
     formData.append('title', project.title);
     formData.append('description', project.description);
-    formData.append('type', String(project.type)); 
+    formData.append('type', String(project.type));
 
     if (project.linkRepo) formData.append('linkRepo', project.linkRepo);
     if (project.linkDeploy) formData.append('linkDeploy', project.linkDeploy);
@@ -47,9 +47,27 @@ export const useProjectService = () => {
 
   const updateProject = async (
     id: string,
-    projectUpdateData: ProjectUpdateData
+    projectUpdateData: ProjectUpdateData,
+    imageFile?: File
   ): Promise<ProjectResponse> => {
-    const response = await api.patch(`/projects/${id}`, projectUpdateData);
+    const formData = new FormData();
+
+    if (projectUpdateData.title) formData.append('title', projectUpdateData.title);
+    if (projectUpdateData.description) formData.append('description', projectUpdateData.description);
+    if (projectUpdateData.type) formData.append('type', projectUpdateData.type);
+    
+    if (projectUpdateData.linkRepo !== undefined) {
+        formData.append('linkRepo', projectUpdateData.linkRepo || '');
+    }
+    if (projectUpdateData.linkDeploy !== undefined) {
+        formData.append('linkDeploy', projectUpdateData.linkDeploy || '');
+    }
+
+    if (imageFile) {
+        formData.append('image', imageFile);
+    }
+    
+    const response = await api.patch(`/projects/${id}`, formData);
     return response.data;
   };
 
