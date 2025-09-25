@@ -25,7 +25,6 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
         <TableRow>
           <TableCell>Título</TableCell>
           <TableCell>Descrição</TableCell>
-          {/* Coluna 'Tipo' */}
           <TableCell>Tipo</TableCell> 
           <TableCell align="center" sx={{ width: '100px' }}>Ações</TableCell> 
         </TableRow>
@@ -36,7 +35,7 @@ const ProjectTable: React.FC<Props> = ({ projects, onEdit, onDelete }) => (
             key={project.id}
             project={project}
             onEdit={() => onEdit(project)}
-            onDelete={() => onDelete(project.id!)}
+            onDelete={() => onDelete(String(project.id))}
           />
         ))}
       </TableBody>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { TableRow, TableCell, IconButton, Stack } from '@mui/material';
+import { TableRow, TableCell, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import type { Project } from '../../../services/projectService/projectService.types';
+import type { Project, ProjectType } from '../../../services/projectService/projectService.types';
 
 interface Props {
   project: Project;
@@ -10,15 +10,15 @@ interface Props {
   onDelete: () => void;
 }
 
+const formatType = (type: ProjectType): string => {
+    return type.charAt(0) + type.slice(1).toLowerCase();
+};
+
 const ProjectRow: React.FC<Props> = ({ project, onEdit, onDelete }) => (
   <TableRow>
     <TableCell>{project.title}</TableCell>
     <TableCell>{project.description}</TableCell>
-    <TableCell>{project.type}</TableCell>
-    <TableCell>
-      <Stack direction="row" spacing={1} flexWrap="wrap">
-      </Stack>
-    </TableCell>
+    <TableCell>{formatType(project.type)}</TableCell>   
     <TableCell align="center" sx={{ width: '100px' }}>
       <IconButton onClick={onEdit}>
         <EditIcon />
