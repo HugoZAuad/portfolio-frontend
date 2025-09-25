@@ -27,7 +27,7 @@ const ProjectsDashboard: React.FC = () => {
   const loadProjects = useCallback(async () => {
     try {
       const response = await getProjects(page, limit);
-      setProjects(response.projects || []); 
+      setProjects(response.projects || []);
     } catch (error) {
       console.error(error);
       showFeedback('Erro ao carregar projetos.', 'error');
@@ -42,11 +42,11 @@ const ProjectsDashboard: React.FC = () => {
     let result: ProjectResponse;
     
     try {
-      if (projectData._id) {
-        result = await updateProject(projectData._id, projectData);
+      if (editingProject && editingProject._id) {
+        result = await updateProject(editingProject._id, projectData);
         if (result.project) {
             setProjects(prevProjects =>
-                (prevProjects || []).map(p => (p._id === projectData._id ? result.project : p))
+                (prevProjects || []).map(p => (p._id === editingProject._id ? result.project : p))
             );
         }
         showFeedback('Projeto atualizado com sucesso!', 'success');
