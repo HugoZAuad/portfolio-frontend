@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Grid, Card, CardContent, LinearProgress } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
+import SkillCard from '../../Components_Skills/SkillCard/SkillCard'; 
 import type { Skill, SkillLevel, SkillCategory } from '../../../services/skillService/skillsService.types';
 
 interface Props {
@@ -51,27 +52,18 @@ const SkillsList: React.FC<Props> = ({ skills }) => {
                 if (!skillsInCategory || skillsInCategory.length === 0) return null;
 
                 return (
-                    <Grid size={{xs:12, md:6}}key={category}> 
+                    <Grid size={{xs:12, md:6}} key={category}> 
                         <Typography variant="h5" gutterBottom sx={{ mt: 2, mb: 1 }}>
                             {formatCategoryForDisplay(category)}
                         </Typography>
-                        
                         <Grid container spacing={2}>
                             {skillsInCategory.map((skill) => (
                                 <Grid size={{xs:12, sm:6, md:6}} key={skill.id}>
-                                    <Card sx={{ height: '100%' }}>
-                                        <CardContent sx={{ p: 3 }}> 
-                                            <Typography variant="h6">{skill.name}</Typography>
-                                            <Typography variant="caption" color="text.secondary">
-                                                Nível: {formatLevelForDisplay(skill.level)}
-                                            </Typography>
-                                            <LinearProgress 
-                                                variant="determinate" 
-                                                value={LEVEL_MAP[skill.level]} 
-                                                sx={{ height: 8, borderRadius: 5, mt: 1 }}
-                                            />
-                                        </CardContent>
-                                    </Card>
+                                    <SkillCard 
+                                        name={skill.name}
+                                        level={formatLevelForDisplay(skill.level)}
+                                        value={LEVEL_MAP[skill.level]}
+                                    />
                                 </Grid>
                             ))}
                         </Grid>
