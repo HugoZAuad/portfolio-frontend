@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, TextField, useTheme, Alert } from '@mui/material';
 import Button from '../../Common/Button/Button';
 
-const CONTACT_API_URL = 'https://portfolio-backend-pr7h.onrender.com/contact';
+const CONTACT_API_URL = 'https://ltd-margaretta-hugozeymerauad-b9e6c12d.koyeb.app/contact';
 
 const ContactForm: React.FC = () => {
   const theme = useTheme();
