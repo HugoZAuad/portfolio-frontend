@@ -26,10 +26,22 @@ const ContactHeader: React.FC = () => {
           maxWidth: '1000px',
           mx: 'auto',
           lineHeight: 1,
-          textAlign: 'justify'
+          textAlign: 'center'
         }}
       >
         Estou sempre interessado em novas oportunidades e projetos interessantes.
+      </Typography>
+      <Typography
+        variant="h5"
+        sx={{
+          color: theme.palette.text.secondary,
+          fontWeight: 400,
+          maxWidth: '1000px',
+          mx: 'auto',
+          lineHeight: 1,
+          textAlign: 'center'
+        }}
+      >
         Vamos conversar como podemos trabalhar juntos!
       </Typography>
     </Box>

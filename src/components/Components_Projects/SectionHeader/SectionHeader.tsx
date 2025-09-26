@@ -25,7 +25,7 @@ const SectionHeader: React.FC = () => {
           maxWidth: '600px',
           mx: 'auto',
           lineHeight: 1.6,
-          textAlign: 'justify'
+          textAlign: 'center'
         }}
       >
         Aqui estão alguns dos meus projetos mais recentes. Cada projeto representa um desafio único
