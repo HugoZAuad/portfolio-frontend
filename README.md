@@ -25,7 +25,7 @@ Este é um portfólio frontend desenvolvido para apresentar trabalhos, habilidad
 
 ### Comunicação e Dados
 - **Axios 1.12.2** - Cliente HTTP para requisições à API
-- **Backend API** - Servidor Nest.js hospedado no Render (https://portfolio-backend-pr7h.onrender.com)
+- **Backend API** - Servidor Nest.js hospedado no Render (https://ltd-margaretta-hugozeymerauad-b9e6c12d.koyeb.app)
 
 ### Desenvolvimento e Qualidade
 - **ESLint 9.35.0** - Linting de código JavaScript/TypeScript
@@ -159,7 +159,7 @@ portfolio-frontend/
 ### Pré-requisitos
 - Node.js (versão 18 ou superior)
 - npm ou yarn
-- Backend rodando (localmente ou via https://portfolio-backend-pr7h.onrender.com)
+- Backend rodando (localmente ou via https://ltd-margaretta-hugozeymerauad-b9e6c12d.koyeb.app)
 
 ### Instalação
 ```bash
@@ -228,7 +228,7 @@ O projeto é totalmente responsivo, com breakpoints otimizados:
 ## 🌐 Deploy
 
 O projeto está configurado para deploy na plataforma Vercel:
-- Backend hospedado em: https://portfolio-backend-pr7h.onrender.com
+- Backend hospedado em: https://ltd-margaretta-hugozeymerauad-b9e6c12d.koyeb.app
 - URL do projeto: https://portfolio-frontend-sand-five.vercel.app
 
 Para deploy local, certifique-se de configurar variáveis de ambiente se necessário (e.g., API base URL).
