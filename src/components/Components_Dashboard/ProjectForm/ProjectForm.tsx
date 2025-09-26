@@ -10,13 +10,21 @@ import {
   MenuItem,
 } from '@mui/material';
 import type { Project, ProjectType } from '../../../services/projectService/projectService.types';
+import type { ProjectUpdateData } from '../../../services/projectService/projectService';
 
 interface Props {
-  onSubmit: (project: Project, imageFile?: File) => void;
+  onSubmit: (projectData: ProjectUpdateData, imageFile?: File) => Promise<void>;
   initialData?: Project;
 }
 
 const projectTypes: ProjectType[] = ['Frontend', 'Backend', 'Fullstack'];
+
+// Função auxiliar para limpar o objeto de dados de atualização
+const getUpdateData = (projectData: Project): ProjectUpdateData => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, imageUrl, ...data } = projectData; 
+    return data;
+};
 
 const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
   const [form, setForm] = useState<Project>({
@@ -64,7 +72,9 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
     e.preventDefault();
     
     try {
-      await onSubmit({ ...form }, imageFile); 
+      const dataToSend = initialData ? getUpdateData(form) : form;
+      
+      await onSubmit(dataToSend, imageFile); 
       
       if (!initialData) {
         setForm({
@@ -81,7 +91,7 @@ const ProjectForm: React.FC<Props> = ({ onSubmit, initialData }) => {
     } catch (error) {
       console.error(
         initialData ? 'Erro ao atualizar projeto:' : 'Erro ao criar projeto:', 
-        error
+        error,
       );
     }
   };
