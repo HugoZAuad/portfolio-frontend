@@ -4,7 +4,7 @@ import SectionHeader from '../../components/Components_Dashboard/SectionHeader/S
 import ProjectForm from '../../components/Components_Dashboard/ProjectForm/ProjectForm';
 import ProjectTable from '../../components/Components_Dashboard/ProjectTable/ProjectTable';
 import FeedbackAlert from '../../components/Common/FeedbackAlert/FeedbackAlert';
-import { useProjectService } from '../../services/projectService/projectService';
+import { useProjectService, type ProjectUpdateData } from '../../services/projectService/projectService';
 import type { Project } from '../../services/projectService/projectService.types';
 
 const ProjectsDashboard: React.FC = () => {
@@ -38,13 +38,11 @@ const ProjectsDashboard: React.FC = () => {
   useEffect(() => {
     loadProjects();
   }, [loadProjects]);
-
-  const handleSubmit = async (projectData: Project, imageFile?: File) => {
+  const handleSubmit = async (projectData: ProjectUpdateData, imageFile?: File) => {
     try {
       if (editingProject && editingProject.id) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { id: id, imageUrl: imageUrl, ...dataToUpdate } = projectData; 
-        const result = await updateProject(editingProject.id, dataToUpdate, imageFile); 
+        const result = await updateProject(editingProject.id, projectData, imageFile); 
+
         if (result.project) {
           setProjects(prevProjects =>
             prevProjects.map(p => (p.id === editingProject.id ? result.project : p))
@@ -52,7 +50,7 @@ const ProjectsDashboard: React.FC = () => {
         }
         showFeedback('Projeto atualizado com sucesso!', 'success');
       } else {
-        const result = await createProject(projectData, imageFile);
+        const result = await createProject(projectData as Project, imageFile);
         if (result.project) {
           await loadProjects();
         }
