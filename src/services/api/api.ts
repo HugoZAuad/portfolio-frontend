@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://portfolio-backend-pr7h.onrender.com',
+  baseURL: 'https://ltd-margaretta-hugozeymerauad-b9e6c12d.koyeb.app/',
   withCredentials: true, 
 });
 
