@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import CinematicName from "../CinematicName/CinematicName"; // ajuste o caminho conforme sua estrutura
+import CinematicName from "../CinematicName/CinematicName";
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -111,7 +111,6 @@ const Navbar: React.FC = () => {
             <CinematicName />
           </Box>
 
-          {/* Desktop Navigation — escondido se menu lateral estiver aberto */}
           <Box
             sx={{
               display: { xs: "none", md: mobileOpen ? "none" : "flex" },
@@ -145,20 +144,18 @@ const Navbar: React.FC = () => {
 
           <ThemeToggle />
 
-          {/* Mobile menu button */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ ml: 2, display: { md: "none" } }}
+            sx={{ ml: 2, display: { md: "none" }, color: theme.palette.text.primary }}
           >
             <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Drawer */}
       <Drawer
         variant="temporary"
         open={mobileOpen}
