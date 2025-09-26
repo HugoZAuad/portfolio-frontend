@@ -49,6 +49,18 @@ const ProjectCard: React.FC<ProjectProps> = ({
       ? "secondary"
       : "success"
 
+  const handleExternalLink = (url: string) => {
+    if (url) {
+      let finalUrl = url
+
+      if (!/^https?:\/\//i.test(url)) {
+        finalUrl = 'https://' + url
+      }
+      
+      window.open(finalUrl, "_blank", "noopener, noreferrer")
+    }
+  }
+
   return (
     <motion.div
       variants={fadeInUp}
@@ -112,7 +124,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
             <Button
               variant="secondary"
               size="small"
-              onClick={() => window.open(linkRepo, "_blank")}
+              onClick={() => handleExternalLink(linkRepo)}
             >
               <GitHubIcon sx={{ mr: 1, fontSize: "1rem" }} />
               Código
@@ -121,7 +133,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
           <Button
             variant="primary"
             size="small"
-            onClick={() => window.open(linkDeploy, "_blank")}
+            onClick={() => handleExternalLink(linkDeploy)}
           >
             <LaunchIcon sx={{ mr: 1, fontSize: "1rem" }} />
             Demo
