@@ -10,8 +10,6 @@ import type { Project } from '../../services/projectService/projectService.types
 const ProjectsDashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingProject, setEditingProject] = useState<Project | undefined>(undefined);
-  const [page] = useState(1);
-  const [limit] = useState(10);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [feedbackSeverity, setFeedbackSeverity] = useState<'success' | 'error'>('success');
@@ -26,13 +24,13 @@ const ProjectsDashboard: React.FC = () => {
 
   const loadProjects = useCallback(async () => {
     try {
-      const response = await getProjects(page, limit);
+      const response = await getProjects(undefined, undefined); 
       setProjects(response.projects || []);
     } catch (error) {
       console.error(error);
       showFeedback('Erro ao carregar projetos.', 'error');
     }
-  }, [getProjects, page, limit]);
+  }, [getProjects]);
 
   useEffect(() => {
     loadProjects();
@@ -53,7 +51,7 @@ const ProjectsDashboard: React.FC = () => {
       } else {
         const result = await createProject(projectData, imageFile);
         if (result.project) {
-          setProjects(prevProjects => [result.project, ...prevProjects]);
+          await loadProjects();
         }
         showFeedback('Projeto criado com sucesso!', 'success');
       }
