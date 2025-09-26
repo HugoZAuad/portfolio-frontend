@@ -14,6 +14,9 @@ const ProjectsDashboard: React.FC = () => {
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [feedbackSeverity, setFeedbackSeverity] = useState<'success' | 'error'>('success');
 
+  const DASHBOARD_PAGE = 1;
+  const DASHBOARD_LIMIT = 999;
+
   const { getProjects, createProject, updateProject, deleteProject } = useProjectService();
 
   const showFeedback = (message: string, severity: 'success' | 'error') => {
@@ -24,7 +27,7 @@ const ProjectsDashboard: React.FC = () => {
 
   const loadProjects = useCallback(async () => {
     try {
-      const response = await getProjects(undefined, undefined); 
+      const response = await getProjects(DASHBOARD_PAGE, DASHBOARD_LIMIT); 
       setProjects(response.projects || []);
     } catch (error) {
       console.error(error);
